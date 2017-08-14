@@ -1,0 +1,86 @@
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{user?.fullName}}</h4>
+    <div class="card-block">
+      <button class="btn btn-primary" (click)="onEditUser()">Edit User</button>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <ul class="list-group list-group-flush">
+            <strong>User Description :</strong>
+            <li class="list-group-item"><strong>Status: </strong><span
+              class="badge badge-pill"
+              [ngClass]="{'active-user': user?.isActive, 'inactive-user': !user?.isActive}">
+              {{ user?.isActive?'Active':'Inactive' }}
+            </span></li>
+            <li class="list-group-item">
+              <strong>First Name:</strong>{{ user?.firstName }}
+            </li>
+            <li class="list-group-item">
+              <strong>Last Name:</strong>{{ user?.lastName }}
+            </li>
+            <li class="list-group-item">
+              <strong>User Name:</strong>{{ user?.userName }}
+            </li>
+            <li class="list-group-item">
+              <strong>User Password:</strong> ***
+            </li>
+          </ul>
+          <ul class="list-group list-group-flush">
+            <strong>Phone(s):</strong>
+            <li class="list-group-item" *ngFor="let phone of user?.userPhones">
+              <strong>
+            {{ phone.desc }}:
+          </strong> {{ phone.number }}
+            </li>
+          </ul>
+
+          <ul class="list-group list-group-flush">
+            <strong>Email(s):</strong>
+            <li class="list-group-item" *ngFor="let email of user?.userEmails">
+              <strong>
+            {{ email.desc }}:
+          </strong> {{ email.email }}
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <ul class="list-group list-group-flush">
+            <strong>User Permissions :</strong>
+            <li class="list-group-item">
+              <strong>Admin:</strong>
+              <span class="badge badge-pill " [ngClass]="{'yes': user?.authRules.isAdmin, 'no': !user?.authRules.isAdmin}">
+              {{ user?.authRules.isAdmin ? 'yes':'no' }}
+              </span>
+            </li>
+            <li class="list-group-item">
+              <strong>Warehouse Manager:</strong>
+              <span class="badge badge-pill " [ngClass]="{'yes': user?.authRules.isWareHouseManager, 'no': !user?.authRules.isWareHouseManager}">
+              {{ user?.authRules.isWareHouseManager ? 'yes':'no' }}
+              </span>
+            </li>
+            <li class="list-group-item">
+              <strong>Dispatcher Manager:</strong>
+              <span class="badge badge-pill " [ngClass]="{'yes': user?.authRules.isDispatcherManager, 'no': !user?.authRules.isDispatcherManager}">
+              {{ user?.authRules.isDispatcherManager ? 'yes':'no' }}
+            </span>
+            </li>
+            <li class="list-group-item">
+              <strong>Atm Technician:</strong>
+              <span class="badge badge-pill " [ngClass]="{'yes': user?.authRules.isAtmTechnician, 'no': !user?.authRules.isAtmTechnician}">
+              {{ user?.authRules.isAtmTechnician ? 'yes':'no' }}
+            </span>
+            </li>
+            <li class="list-group-item">
+              <strong>Atm Vaulter:</strong>
+              <span class="badge badge-pill " [ngClass]="{'yes': user?.authRules.isAtmVaulter, 'no': !user?.authRules.isAtmVaulter}">
+              {{ user?.authRules.isAtmVaulter ? 'yes':'no' }}
+            </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

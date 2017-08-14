@@ -1,0 +1,11 @@
+<div class="col-md-6 col-md-offset-3" style="margin-top:15px;">
+    <div class="card" [ngClass]="{slideInDown:isLoaded, animated: isLoaded}" style="width: 20rem;">
+      <img class="card-img-top" style="height:138px;" src="http://lorempixel.com/380/180/city/" class="zoomInRight">
+      <div class="card-block">
+        <h5 class="card-title">Welcome : {{fullName}}</h5>
+        <p class="card-text">Lorem ipsum dolor sit ametsunt in culpa qui officia deserunt mollit anim id est laborum..</p>
+        <a [routerLink]="['/login']" class="btn btn-danger">Logout</a>
+        <a href="#" class="btn btn-link">Change Password</a>
+      </div>
+    </div>
+</div>

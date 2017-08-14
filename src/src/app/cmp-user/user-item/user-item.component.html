@@ -1,0 +1,14 @@
+<a style="cursor: pointer;" [routerLink]="[userId]" routerLinkActive="active" class="list-group-item list-group-item-action flex-column align-items-start">
+  <div class="d-flex justify-content-between">
+    <strong>{{ user.fullName }}</strong>
+  </div>
+  <div>
+  <span>Status:</span>
+  <span
+    class="badge badge-pill"
+    [ngClass]="{'active-user': user.isActive, 'inactive-user': !user.isActive}">
+    {{ user.isActive?'Active':'Inactive' }}
+  </span>
+  </div>
+  <small>updated: {{ user.updated | date:'medium' }}</small>
+</a>

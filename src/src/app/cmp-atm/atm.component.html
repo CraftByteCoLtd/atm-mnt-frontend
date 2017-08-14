@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-12">
+<br>
+    <div class="card">
+      <div class="card-block">
+        <h5 class="card-title">Atm on the map</h5>
+      <agm-map
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="zoom">
+        <agm-marker
+        *ngFor="let m of markers;let i = index"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        >
+        <agm-info-window>
+          <strong>
+            {{m.name}}
+          </strong>
+          <p>{{m.desc}}</p>
+        </agm-info-window>
+      </agm-marker>
+      </agm-map>
+    </div>
+  </div>
+  </div>
+
+</div>
