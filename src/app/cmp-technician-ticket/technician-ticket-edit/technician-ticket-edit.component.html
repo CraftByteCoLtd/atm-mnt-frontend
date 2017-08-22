@@ -1,0 +1,84 @@
+<form [formGroup]="ttForm" (ngSubmit)="onSubmit()">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <nav class="navbar navbar-light bg-light">
+            <h4>Create ticket</h4>
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">Save</button>
+              <button class="btn btn-danger pull-right" (click)="onCancel()" type="reset">Cancel</button><br>
+            </div>
+          </nav>
+          <br>
+          <h4 class="card-title">Ticket ID : </h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="tTicketSymptom">Symptom: </label>
+            <input #tTicketSymptom formControlName="tTicketSymptom" type="text" class="form-control" placeholder="Enter some note">
+            <div class="alert alert-danger" *ngIf="ttForm.get('tTicketSymptom').hasError('required') && ttForm.get('tTicketSymptom').touched">
+              tTicketSymptom is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="tTicketSolution">Symptom: </label>
+            <input #tTicketSolution formControlName="tTicketSolution" type="text" class="form-control" placeholder="Enter some text">
+            <div class="alert alert-danger" *ngIf="ttForm.get('tTicketSolution').hasError('required') && ttForm.get('tTicketSolution').touched">
+              tTicketSolution is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subscription">Responsible Person: </label>
+            <select id="subscription" class="form-control" name="subscription">
+                <option *ngFor="let r of responsiblePersons" value="basic">{{r.fullName}}</option>
+          </select>
+          </div>
+
+          <div class="form-group">
+            <label for="subscription">ATM Machine: </label>
+            <select id="subscription" class="form-control" name="subscription">
+                <option *ngFor="let r of atms" value="basic">{{r.atmMachineID}}</option>
+          </select>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="tTicketRepairedParts">Repaired Parts: </label>
+            <!-- type head  -->
+            <ng-template #rt let-r="result" let-t="term">
+              <div class="type-head-item">
+                {{ r?.partDetail}}
+              </div>
+            </ng-template>
+
+            <div class="input-group">
+              <span *ngIf="selectedPart" class="input-group-addon">Search</span>
+              <input id="typeahead-template" placeholder="Enter keyword to search part description" class="form-control" type="text" class="form-control" [(ngModel)]="selectedPart" [ngModelOptions]="{standalone: true}" [ngbTypeahead]="search" [resultTemplate]="rt"
+                [inputFormatter]="formatter" />
+            </div>
+            <ul class="list-group" *ngIf="selectedPart">
+              <strong>Selected Part</strong>
+              <li class="list-group-item"><strong>Part ID:</strong>{{selectedPart?.partID}}</li>
+              <li class="list-group-item"><strong>Part Type:</strong>{{selectedPart?.partType}}</li>
+              <li class="list-group-item"><strong>Part Type:</strong>{{selectedPart?.partType}}</li>
+              <li class="list-group-item"><strong>Part Price:</strong>{{selectedPart?.partPrice}}</li>
+              <li class="list-group-item"><strong>Part Serial#:</strong>{{selectedPart?.partSerialNumber}}</li>
+              <li class="list-group-item"><strong>Part Stock:</strong>{{selectedPart?.partStock}}</li>
+
+            </ul>
+
+            <!-- type head -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">
+       <!-- {{currentUser['fullName']}} -->
+    </small>
+    </div>
+  </div>
+</form>

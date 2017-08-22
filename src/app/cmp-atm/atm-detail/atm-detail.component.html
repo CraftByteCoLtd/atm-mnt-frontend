@@ -1,0 +1,30 @@
+<div class="card">
+<h3><i class="fa fa-credit-card" aria-hidden="true"></i> Selected ATM Detail</h3>
+<nav class="navbar navbar-light bg-light">
+    <button class="btn btn-primary" (click)="onEditAtm()">Edit</button>
+</nav>
+  <div class="card-body">
+    <p class="text-mute">Machine ID/Terminal ID :</p>
+    <h4 class="card-title"> {{ atm?.atmMachineID }}</h4>
+    <p class="card-text">{{ atm?.atmNote}}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      Current Ballance :  <h4 class="">{{ atm?.atmBalance | currency:'USD':true}}</h4>
+    </li>
+    <li class="list-group-item">
+      <small>Updated on: {{ atm?.updated | date:'medium' }}</small>
+    </li>
+    <li class="list-group-item">
+      <small>Updated by: {{ atm?.atmUpdatedBy['fullName'] }}</small>
+    </li>
+  </ul>
+  <div class="card-body">
+    <h3>Location:
+    </h3>
+    <small class="text-muted">
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+      Lattitude & longitute: {{draggedCoord?.lat}},{{draggedCoord?.lng}}</small>
+    <app-map-with-marker (onDraggedLocation)="onGetDraggedLocation($event)" [atm]="atm"></app-map-with-marker>
+  </div>
+</div>

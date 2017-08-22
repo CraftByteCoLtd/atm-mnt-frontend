@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+  <a
+    class="navbar-brand"
+    [routerLink]="['/home']">
+    <i class="fa fa-credit-card" aria-hidden="true"></i>ATM Management System</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse"   (click)="collapsedMenu()">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+
+     <div class="collapse navbar-collapse" id="navMain" [ngbCollapse]="isCollapsed">
+       <ul class="navbar-nav mr-auto">
+         <li
+         *ngIf="isAtmVaulter"
+         class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle>ATM Machine</a>
+            <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="techician-ticket-dropdown">
+              <a
+               [routerLink]="['atm-detail']"
+               class="dropdown-item" >
+                <i class="fa fa-ticket" aria-hidden="true"></i>
+                View Machine Detail</a>
+            </div>
+         </li>
+
+         <li
+         *ngIf="isDispatcherManager"
+         class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle"
+              ngbDropdownToggle>Dispatch Ticket</a>
+            <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="atm-dropdown">
+              <a class="dropdown-item" [routerLink]="['my-dispatch-ticket']">My Dispatch Tickets</a>
+              <a class="dropdown-item" [routerLink]="['dispatch-ticket']">All Dispatch Tickets</a>
+            </div>
+         </li>
+         <li
+         *ngIf="isAtmTechnician"
+         class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle>Technician Tickets</a>
+            <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="techician-ticket-dropdown">
+              <a
+               [routerLink]="['technician-ticket']"
+               class="dropdown-item" >
+                <i class="fa fa-ticket" aria-hidden="true"></i>
+                All Technician Tickets</a>
+            </div>
+         </li>
+         <li
+         *ngIf="isWareHouseManager"
+         class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle>Part Inventory</a>
+            <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="part-inventory-dropdown">
+              <a
+               [routerLink]="['part-inventory']"
+               class="dropdown-item">
+                <i class="fa fa-microchip" aria-hidden="true"></i>
+                View All Inventory</a>
+            </div>
+         </li>
+         <li
+         *ngIf="isTreasurer"
+         class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle"
+              ngbDropdownToggle
+              aria-haspopup="true"
+              aria-expanded="false">Manage Tresury</a>
+            <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="manage-tresury-dropdown">
+              <a
+              [routerLink]="['tresury']"
+              class="dropdown-item" ><i class="fa fa-money" aria-hidden="true"></i> Manage Tresury</a>
+            </div>
+         </li>
+         <li
+         *ngIf="isAdmin"
+         class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle"
+              ngbDropdownToggle
+              aria-haspopup="true"
+              aria-expanded="false">System Admin</a>
+            <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="system-admin-dropdown">
+              <a
+               [routerLink]="['company-profile']"
+               class="dropdown-item">
+                <i class="fa fa-building" aria-hidden="true"></i>Manage Company</a>
+              <a
+              [routerLink]="['user']"
+              class="dropdown-item"><i class="fa fa-user-o" aria-hidden="true"></i>Manage Users</a>
+              <a
+              [routerLink]="['atm']"
+              class="dropdown-item"><i class="fa fa-id-card" aria-hidden="true"></i>Manage Atm</a>
+            </div>
+         </li>
+         <li *ngIf="isLoggedIn">
+           <div class="pull-right">
+             <a  [routerLink]="['/login']" class="btn btn-danger">Logout</a>
+           </div></li>
+       </ul>
+
+     </div>
+   </nav>

@@ -1,14 +1,14 @@
-import { FrontEndPage } from './app.po';
+import { Test430Page } from './app.po';
 
-describe('front-end App', () => {
-  let page: FrontEndPage;
+describe('test430 App', () => {
+  let page: Test430Page;
 
   beforeEach(() => {
-    page = new FrontEndPage();
+    page = new Test430Page();
   });
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!');
   });
 });

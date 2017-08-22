@@ -1,0 +1,46 @@
+.card{
+  margin-top:15px;
+  max-width:740px;
+  padding: 15px;
+}
+
+.alert{
+  margin-top:5px;
+  margin-left:5px;
+  padding: 2px;
+
+}
+.btn{
+  margin-left: 5px;
+}
+
+input.ng-invalid  {
+  border-left: 2px solid #a94442; /* red */
+}
+
+label{
+  font-weight: bold;
+  padding-right:5px;
+}
+
+.form-row{
+  margin-top:10px;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #ccc;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #ccc;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #ccc;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #ccc;
+}
+label.label-fix-width {
+    width: 111px;
+}
+.form-group.mx-sm-6 {
+    padding-top: 10px;
+}

@@ -1,0 +1,25 @@
+.btn{
+  margin-left:5px;
+  margin-bottom: 5px;
+}
+
+.card{
+  margin-top:15px;
+  padding:5px;
+
+}
+
+.open{
+  background: green;
+}
+
+.closed{
+  background: grey;
+}
+
+
+.list-group-item{
+	border-left:none;
+  border-right:none;
+  border-top:none;
+}

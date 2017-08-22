@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-title">
+    <nav class="navbar navbar-light bg-light">
+      <h5 class="card-title">#{{tt.tTicketID}}</h5>
+    <a style="cursor: pointer;"
+    [routerLink]="[ttId,'edit']"
+    routerLinkActive="active"
+    class="btn btn-outline-info pull-right">
+      Edit Ticket
+    </a>
+  </nav>
+  </div>
+  <div class="card-body">
+    <span class="badge badge-pill" ngClass="{{tt.tTicketStatus}}">
+  {{ tt.tTicketStatus }}
+  </span>
+    <strong>Symptom:</strong>
+    <p class="card-text">
+      {{ tt.tTicketSymptom }}
+    </p>
+    <strong>Solution:</strong>
+    <p class="card-text">
+      {{ tt.tTicketSolution }}
+    </p>
+    <strong>Responsible Person:</strong>
+    <p class="card-text">
+      {{ tt.tTicketResponsiblePerson.fullName }}
+    </p>
+
+  </div>
+  <div class="card-footer">
+    <small class="text-muted">updated: {{tt.updated}}</small>
+
+  </div>
+
+</div>

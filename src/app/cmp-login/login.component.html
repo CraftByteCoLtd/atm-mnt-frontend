@@ -1,0 +1,56 @@
+<div class="col-md-12">
+
+<!-- Login Form -->
+<div class="app-login" >
+	<h2 class="scenter"><i class="fa fa-user-circle" aria-hidden="true"> </i> Sign In</h2>
+	<div *ngIf="error" [ngClass]="{headShake:error, animated: error}" class="alert alert-danger">{{error}}</div>
+	<form
+		#f="ngForm"
+		(ngSubmit)="login(f)" novalidate>
+		<div class="form-group">
+			<label for="username">Username</label>
+			<input name="username"
+			 #username="ngModel"
+			 ngModel
+			 required
+			 type="text"
+			 class="form-control"
+			 placeholder="Enter Username">
+			 	<p class="help-block"
+			  	*ngIf="!username.valid && username.touched">
+					Username is required!
+				</p>
+
+		</div>
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input
+			 name="password"
+			 #password="ngModel"
+			 ngModel
+			 required
+			 type="password"
+			 class="form-control"
+			 placeholder="Enter password">
+			 	<p class="help-block"
+			 		*ngIf="!password.valid && password.touched">
+					Password is required!
+				</p>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox"> Remember Me
+			</label>
+		</div>
+		<button
+			type="submit"
+			[disabled]="!f.valid"
+			class="btn btn-primary">
+			Sign In
+		</button>
+		<a href="#">Forgot Password?</a>
+	</form>
+
+</div>
+
+</div>

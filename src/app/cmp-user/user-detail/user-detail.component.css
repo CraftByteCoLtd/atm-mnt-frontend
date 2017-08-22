@@ -1,0 +1,28 @@
+.card{
+  margin-top:15px;
+  max-width:640px;
+  padding: 5px;
+}
+
+.active-user{
+  background-color:green;
+}
+
+.inactive-user{
+  background-color:red;
+}
+.yes{
+	background-color:green;
+}
+
+.no{
+	background-color:red;
+}
+
+.list-group-item{
+  border-bottom:0;
+}
+
+.btn{
+  margin-left: 5px;
+}

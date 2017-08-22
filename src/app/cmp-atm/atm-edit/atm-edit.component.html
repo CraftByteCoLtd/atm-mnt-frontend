@@ -1,0 +1,66 @@
+<div class="card">
+  <form [formGroup]="atmForm" (ngSubmit)="onSubmit()">
+    <h3><i class="fa fa-credit-card" aria-hidden="true"></i> Edit ATM</h3>
+    <nav class="navbar navbar-light bg-light">
+      <div class="form-group">
+        <button [disabled]="!atmForm.valid" class="btn btn-success" type="submit">Save</button>
+        <button class="btn btn-danger pull-right" (click)="onCancel()" type="reset">Cancel</button><br>
+        <div class="alert alert-danger" role="alert" *ngIf="!atmForm.valid && atmForm.touched">
+          Please input all required fields!!
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="msg?.success===false">
+          {{msg?.message}}
+        </div>
+      </div>
+    </nav>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="atmMachineID">Machine ID/Terminal ID: </label>
+        <input #atmMachineID formControlName="atmMachineID" type="text" class="form-control" placeholder="Enter Machine ID">
+        <div class="alert alert-danger" *ngIf="atmForm.get('atmMachineID').hasError('required') && atmForm.get('atmMachineID').touched">
+          MachineID is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="atmBalance">Current Balance: </label>
+        <input #atmBalance formControlName="atmBalance" type="number" class="form-control" placeholder="Enter Balance">
+        <div class="alert alert-danger" *ngIf="atmForm.get('atmBalance').hasError('required') && atmForm.get('atmBalance').touched">
+          Please enter the Balance.
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-check-label">
+          <input class="form-check-input"
+          type="checkbox"
+          formControlName="atmStatus">
+          Online
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="atmNote">Note: </label>
+        <input #atmNote formControlName="atmNote" type="text" class="form-control" placeholder="Enter some note">
+        <div class="alert alert-danger" *ngIf="atmForm.get('atmNote').hasError('required') && atmForm.get('atmNote').touched">
+          MachineID is required
+        </div>
+      </div>
+      <div [formGroup]="atmLocationFormGroup">
+        <label for="lat">Lattitute: </label>
+        <input #lat formControlName="lat" type="number" class="form-control" placeholder="Enter Lattitute">
+        <label for="lng">Longitute: </label>
+        <input #lng formControlName="lng" type="number" class="form-control" placeholder="Enter Longitute">
+      </div>
+      <input type="hidden" formControlName="id" value="{{id}}">
+      <div [formGroup]="atmUpdatedByFormGroup">
+        <input type="hidden" #fullName formControlName="fullName" value="{{currentUserFullName}}">
+      </div>
+    </div>
+    <div class="card-body">
+      <strong>Select Location from maps:
+    </strong><br>
+      <small class="text-muted">
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+      Lattitude & longitute: {{draggedCoord?.lat}},{{draggedCoord?.lng}}</small>
+      <app-map-with-marker (onDraggedLocation)="onGetDraggedLocation($event)" [atm]="atm"></app-map-with-marker>
+    </div>
+  </form>
+</div>

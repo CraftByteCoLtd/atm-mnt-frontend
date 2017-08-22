@@ -1,0 +1,10 @@
+.card{
+  margin-top: 15px;
+  max-width: 920px;
+}
+
+.type-head-item{
+  padding:5px;
+  line-height: 20px;
+  font-weight: bold;
+}

@@ -1,0 +1,9 @@
+.card{
+  padding:5px;
+  margin-top:15px;
+  min-width: 250px;
+}
+
+.alert{
+  margin-top: 5px;
+}

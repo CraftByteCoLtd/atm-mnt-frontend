@@ -1,0 +1,20 @@
+<div class="row" style="margin-top:15px">
+  <div class="col-md-12">
+    <nav class="navbar navbar-light bg-light">
+      <h4 class="card-title"><i class="fa fa-atm" aria-hidden="true"></i>Manage Technician Tickets</h4>
+      <div class="form-group">
+        <button class="btn btn-success pull-right" (click)="onAddNewTicket()">Create New Technician Ticket</button>
+      </div>
+    </nav>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <app-technician-ticket-list></app-technician-ticket-list>
+  </div>
+</div>

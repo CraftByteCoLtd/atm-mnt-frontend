@@ -1,0 +1,16 @@
+<a style="cursor: pointer;" [routerLink]="[atmId]" routerLinkActive="active" class="list-group-item list-group-item-action flex-column align-items-start">
+  <div class="d-flex ">
+    <div class="row">
+      <div class="col-md-6">
+        <strong>{{ atm.atmMachineID }}</strong>
+        <span class="badge badge-pill" [ngClass]="{'online': atm.atmStatus === true, 'offline': atm.atmStatus===false}">
+    {{ atm.atmStatus === true ?'online':'offline' }}
+     </span>
+      </div>
+      <div class="col-md-6">
+        <h4>{{ atm.atmBalance | currency:'USD':true}}</h4>
+      </div>
+    </div>
+  </div>
+  <small>updated: {{ atm.updated | date:'medium' }}</small>
+</a>

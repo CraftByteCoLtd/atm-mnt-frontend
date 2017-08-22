@@ -1,0 +1,26 @@
+<div class="img-thumbnail">
+<agm-map
+[latitude]="lat"
+[longitude]="lng"
+[zoom]="zoom"
+[disableDefaultUI]="false"
+(mapClick)="mapClicked($event)">
+  <agm-marker *ngFor="let m of markers;let i = index"
+  [latitude]="m.lat"
+  [longitude]="m.lng"
+  (dragEnd)="markerDragEnd(m, $event)"
+
+  [markerDraggable]="m.draggable">
+    <agm-info-window>
+      <h5>
+           {{m?.name}}
+      </h5>
+      <p>{{m?.desc}}</p>
+      <small>{{m?.updated}}</small>
+      <h3 class="" *ngIf="m?.balance">
+        {{m?.balance | currency:'USD':true}}
+      </h3>
+    </agm-info-window>
+  </agm-marker>
+</agm-map>
+</div>
