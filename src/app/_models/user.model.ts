@@ -29,6 +29,7 @@ export class User {
   public userEmails?: UserEmail[];
   public created: Date;
   public updated: Date;
+  public id : string;
   constructor() {
   }
 }

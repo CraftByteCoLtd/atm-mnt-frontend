@@ -22,15 +22,21 @@
     <p class="card-text">
       {{ tt.tTicketSolution }}
     </p>
+    <strong>Atm Machine:</strong>
+    <p class="card-text">
+      {{ tt.atmMachineID }}
+    </p>
     <strong>Responsible Person:</strong>
     <p class="card-text">
-      {{ tt.tTicketResponsiblePerson.fullName }}
+      {{ tt.tTicketResponsiblePerson?.fullName }}
     </p>
 
   </div>
   <div class="card-footer">
-    <small class="text-muted">updated: {{tt.updated}}</small>
-
+    <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+    <small class="text-muted">updated: {{tt.updated |  date:'medium' }}</small><br>
+    <i class="fa fa-calendar" aria-hidden="true"></i>
+    <small class="text-muted">created: {{tt.tTicketCreated | date:'medium' }}</small>
   </div>
 
 </div>

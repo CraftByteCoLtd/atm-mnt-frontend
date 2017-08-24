@@ -1,3 +1,90 @@
-<p>
-  part-inventory-edit works!
-</p>
+<form [formGroup]="partForm" (ngSubmit)="onSubmit()">
+  <div class="card">
+    <div class="card-body">
+      <nav class="navbar navbar-light bg-light">
+        <h4>{{ editMode == true ? 'Edit': 'Create'  }} Part </h4>
+        <div class="form-group">
+          <button [disabled]="!partForm.valid" class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-danger pull-right" (click)="onCancel()" type="reset">Cancel</button><br>
+        </div>
+      </nav>
+      <div class="alert alert-danger" role="alert" *ngIf="msg?.success===false">
+        {{msg?.message}}
+      </div>
+      <br>
+      <h4 class="card-title">{{ part.partID}}</h4>
+      <div class="form-group">
+        <label for="partDetail">Part Detail: </label>
+        <input #partDetail formControlName="partDetail" type="text" class="form-control" placeholder="Enter some part detail">
+        <div class="alert alert-danger" *ngIf="partForm.get('partDetail').hasError('required') && partForm.get('partDetail').touched">
+          The part detail is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="partType">partType: </label>
+        <input #partType formControlName="partType" type="text" class="form-control" placeholder="Enter part type">
+        <div class="alert alert-danger" *ngIf="partForm.get('partType').hasError('required') && partForm.get('partType').touched">
+          The Part type is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="partStock">Stock: </label>
+        <input #partStock formControlName="partStock" type="number" class="form-control" placeholder="Enter number in stock">
+        <div class="alert alert-danger" *ngIf="partForm.get('partStock').hasError('required') && partForm.get('partStock').touched">
+          The Part Stock is required. Only Number is accepted!
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="partPrice">Price: </label>
+        <input #partPrice formControlName="partPrice" type="number" class="form-control" placeholder="Enter Price">
+        <div class="alert alert-danger" *ngIf="partForm.get('partPrice').hasError('required') && partForm.get('partPrice').touched">
+          The Part Price is required. Only Number is accepted!
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="partSerialNumber">Serial Number : </label>
+        <input #partSerialNumber formControlName="partSerialNumber" type="text" class="form-control" placeholder="Enter Part SerialNumber">
+        <div class="alert alert-danger" *ngIf="partForm.get('partSerialNumber').hasError('required') && partForm.get('partSerialNumber').touched">
+          The Part SerialNumber is required!
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="subscription">ATM Machine: </label>
+        <!-- Atm  -->
+        <ng-template #rtAtm let-r="result" let-t="term">
+          <div class="type-head-item">
+            {{ r.atmMachineID }}
+          </div>
+        </ng-template>
+        <div class="input-group">
+          <span *ngIf="selectedAtm" class="input-group-addon">Search</span>
+          <input id="typeahead-template"
+          placeholder="Enter Atm Machine ID to search."
+          class="form-control" type="text" class="form-control"
+          [(ngModel)]="selectedAtm"
+          [ngModelOptions]="{standalone: true}"
+          [ngbTypeahead]="searchAtm"
+          [resultTemplate]="rtAtm" [inputFormatter]="formatterAtm" />
+        </div>
+        <div class="type-head-group-list" *ngIf="selectedAtm.atmMachineID">
+          <ul class="list-group">
+            <strong>Selected ATM</strong>
+            <li class="list-group-item no-line"><strong>ATM ID:</strong>{{selectedAtm?.atmMachineID}}</li>
+          </ul>
+        </div>
+        <!-- Atm -->
+      </div>
+      <input type="hidden" formControlName="partCreated">
+
+    </div>
+
+    <div class="card-footer">
+      <small class="text-muted">
+       <!-- {{currentUser['fullName']}} -->
+    </small>
+    </div>
+  </div>
+</form>

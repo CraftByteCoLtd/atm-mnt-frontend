@@ -36,6 +36,7 @@ import { TresuryEditComponent } from './cmp-tresury/tresury-edit/tresury-edit.co
 import { TresuryDetailComponent } from './cmp-tresury/tresury-detail/tresury-detail.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { VaulterComponent } from './cmp-vaulter/vaulter.component';
 
 import { AuthGuard } from './_guards/index';
 
@@ -79,6 +80,7 @@ const appRoutes: Routes = [
 		{ path: ':id', component: TresuryDetailComponent },
 		{ path: ':id/edit', component: TresuryEditComponent }
 	],canActivate: [AuthGuard] },
+	{ path: 'vaulter', component: VaulterComponent,canActivate: [AuthGuard] },
 	{ path: 'page-not-found', component: PageNotFoundComponent },
 	{ path: '**', redirectTo: '/page-not-found' }
 ];

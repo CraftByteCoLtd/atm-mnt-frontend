@@ -1,3 +1,22 @@
-<p>
-  part-inventory works!
-</p>
+<div class="row" style="margin-top:15px">
+  <div class="col-md-12">
+    <nav class="navbar navbar-light bg-light">
+      <h4 class="card-title">
+        <i class="fa fa-microchip" aria-hidden="true"></i>
+        Part Inventory</h4>
+      <div class="form-group">
+        <button class="btn btn-success pull-right" (click)="onAddNewPart()">Create New Part</button>
+      </div>
+    </nav>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <app-part-inventory-list></app-part-inventory-list>
+  </div>
+</div>

@@ -1,3 +1,7 @@
-<p>
-  part-inventory-list works!
-</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card-deck">
+      <app-part-inventory-item *ngFor="let part of parts " [part]="part" [partId]="part._id"></app-part-inventory-item>
+    </div>
+  </div>
+</div>

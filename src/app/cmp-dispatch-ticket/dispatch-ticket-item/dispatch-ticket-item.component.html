@@ -1,0 +1,16 @@
+<a style="cursor: pointer;" [routerLink]="[dtId]"
+routerLinkActive="active"
+class="list-group-item list-group-item-action flex-column align-items-start">
+  <div class="d-flex ">
+    <div class="row">
+      <div class="col-md-12">
+        <strong> Dispatch ID: {{ dt.dtID }}</strong>
+        <span class="badge {{ dt.dtStatus }}" >
+          {{ dt.dtStatus }}
+     </span>
+      </div>
+    </div>
+  </div>
+  <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+  <small>updated: {{ dt.updated | date:'medium' }}</small>
+</a>

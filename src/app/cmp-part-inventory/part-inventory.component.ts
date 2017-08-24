@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-part-inventory',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PartInventoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
   }
 
+  onAddNewPart(){
+    this.router.navigate(['new'], { relativeTo: this.route });
+
+  }
 }

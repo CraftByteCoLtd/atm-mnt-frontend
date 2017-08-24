@@ -1,80 +1,114 @@
 <form [formGroup]="ttForm" (ngSubmit)="onSubmit()">
   <div class="card">
     <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <nav class="navbar navbar-light bg-light">
-            <h4>Create ticket</h4>
-            <div class="form-group">
-              <button class="btn btn-primary" type="submit">Save</button>
-              <button class="btn btn-danger pull-right" (click)="onCancel()" type="reset">Cancel</button><br>
-            </div>
-          </nav>
-          <br>
-          <h4 class="card-title">Ticket ID : </h4>
+      <nav class="navbar navbar-light bg-light">
+        <h4>{{ editMode == true ? 'Edit': 'Create'  }} ticket</h4>
+        <div class="form-group">
+          <button [disabled]="!ttForm.valid" class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-danger pull-right" (click)="onCancel()" type="reset">Cancel</button><br>
+        </div>
+      </nav>
+      <div class="alert alert-danger" role="alert" *ngIf="msg?.success===false">
+        {{msg?.message}}
+      </div>
+      <br>
+      <h4 class="card-title">{{ tt.tTicketID}}</h4>
+      <div class="form-group">
+        <label for="tTicketSymptom">Symptom: </label>
+        <input #tTicketSymptom formControlName="tTicketSymptom" type="text" class="form-control" placeholder="Enter some note">
+        <div class="alert alert-danger" *ngIf="ttForm.get('tTicketSymptom').hasError('required') && ttForm.get('tTicketSymptom').touched">
+          The Symptom is required
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="tTicketSymptom">Symptom: </label>
-            <input #tTicketSymptom formControlName="tTicketSymptom" type="text" class="form-control" placeholder="Enter some note">
-            <div class="alert alert-danger" *ngIf="ttForm.get('tTicketSymptom').hasError('required') && ttForm.get('tTicketSymptom').touched">
-              tTicketSymptom is required
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="tTicketSolution">Symptom: </label>
-            <input #tTicketSolution formControlName="tTicketSolution" type="text" class="form-control" placeholder="Enter some text">
-            <div class="alert alert-danger" *ngIf="ttForm.get('tTicketSolution').hasError('required') && ttForm.get('tTicketSolution').touched">
-              tTicketSolution is required
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="subscription">Responsible Person: </label>
-            <select id="subscription" class="form-control" name="subscription">
-                <option *ngFor="let r of responsiblePersons" value="basic">{{r.fullName}}</option>
-          </select>
-          </div>
-
-          <div class="form-group">
-            <label for="subscription">ATM Machine: </label>
-            <select id="subscription" class="form-control" name="subscription">
-                <option *ngFor="let r of atms" value="basic">{{r.atmMachineID}}</option>
-          </select>
-          </div>
+      <div class="form-group">
+        <label for="tTicketSolution">Solution: </label>
+        <input #tTicketSolution formControlName="tTicketSolution" type="text" class="form-control" placeholder="Enter some text">
+        <div class="alert alert-danger" *ngIf="ttForm.get('tTicketSolution').hasError('required') && ttForm.get('tTicketSolution').touched">
+          The Solution is required
         </div>
-        <div class="col">
-          <div class="form-group">
-            <label for="tTicketRepairedParts">Repaired Parts: </label>
-            <!-- type head  -->
-            <ng-template #rt let-r="result" let-t="term">
-              <div class="type-head-item">
-                {{ r?.partDetail}}
-              </div>
-            </ng-template>
-
-            <div class="input-group">
-              <span *ngIf="selectedPart" class="input-group-addon">Search</span>
-              <input id="typeahead-template" placeholder="Enter keyword to search part description" class="form-control" type="text" class="form-control" [(ngModel)]="selectedPart" [ngModelOptions]="{standalone: true}" [ngbTypeahead]="search" [resultTemplate]="rt"
-                [inputFormatter]="formatter" />
-            </div>
-            <ul class="list-group" *ngIf="selectedPart">
-              <strong>Selected Part</strong>
-              <li class="list-group-item"><strong>Part ID:</strong>{{selectedPart?.partID}}</li>
-              <li class="list-group-item"><strong>Part Type:</strong>{{selectedPart?.partType}}</li>
-              <li class="list-group-item"><strong>Part Type:</strong>{{selectedPart?.partType}}</li>
-              <li class="list-group-item"><strong>Part Price:</strong>{{selectedPart?.partPrice}}</li>
-              <li class="list-group-item"><strong>Part Serial#:</strong>{{selectedPart?.partSerialNumber}}</li>
-              <li class="list-group-item"><strong>Part Stock:</strong>{{selectedPart?.partStock}}</li>
-
-            </ul>
-
-            <!-- type head -->
+      </div>
+      <div class="form-group">
+      <label for="tTicketStatus">Status: </label>
+      <select formControlName="tTicketStatus"class="form-control" >
+        <option value="open">Open</option>
+        <option value="closed">Closed</option>
+      </select>
+      </div>
+      <div class="form-group">
+        <label for="subscription">ResponsiblePerson: </label>
+        <!-- ResponsiblePerson  -->
+        <ng-template #rtPerson let-r="result" let-t="term">
+          <div class="type-head-item">
+            {{ r?.fullName }}
           </div>
+        </ng-template>
+        <div class="input-group">
+          <span *ngIf="selectedResponsiblePerson" class="input-group-addon">Search</span>
+          <input id="typeahead-template" placeholder="Enter Technician name to search." class="form-control" type="text" class="form-control" [(ngModel)]="selectedResponsiblePerson" [ngModelOptions]="{standalone: true}" [ngbTypeahead]="searchPerson" [resultTemplate]="rtPerson"
+            [inputFormatter]="formatterPerson" />
         </div>
+        <div class="type-head-group-list" *ngIf="selectedResponsiblePerson.fullName">
+          <ul class="list-group">
+            <strong>Selected Responsible Person</strong>
+            <li class="list-group-item no-line"><strong>Full Name:</strong>{{selectedResponsiblePerson?.fullName}}</li>
+            <li class="list-group-item no-line"><strong>User Name:</strong>{{selectedResponsiblePerson?.userName}}</li>
+          </ul>
+        </div>
+        <!-- ResponsiblePerson -->
+      </div>
+
+      <div class="form-group">
+        <label for="subscription">ATM Machine: </label>
+        <!-- Atm  -->
+        <ng-template #rtAtm let-r="result" let-t="term">
+          <div class="type-head-item">
+            {{ r.atmMachineID }}
+          </div>
+        </ng-template>
+        <div class="input-group">
+          <span *ngIf="selectedAtm" class="input-group-addon">Search</span>
+          <input id="typeahead-template" placeholder="Enter Atm Machine ID to search." class="form-control" type="text" class="form-control" [(ngModel)]="selectedAtm" [ngModelOptions]="{standalone: true}" [ngbTypeahead]="searchAtm" (ngModelChange)="getPartsByAtmID()"
+            [resultTemplate]="rtAtm" [inputFormatter]="formatterAtm" />
+        </div>
+        <div class="type-head-group-list" *ngIf="selectedAtm.atmMachineID">
+          <ul class="list-group">
+            <strong>Selected ATM</strong>
+            <li class="list-group-item no-line"><strong>ATM ID:</strong>{{selectedAtm?.atmMachineID}}</li>
+          </ul>
+        </div>
+        <!-- Atm -->
+      </div>
+      <div class="form-group">
+        <label for="tTicketRepairedParts">Repaired Part: </label>
+        <!--  tTicketRepairedPart -->
+        <ng-template #rtPart let-r="result" let-t="term">
+          <div class="type-head-item">
+            {{ r?.partDetail}}
+          </div>
+        </ng-template>
+
+        <div class="input-group">
+          <span *ngIf="selectedPart" class="input-group-addon">Search</span>
+          <input id="typeahead-template" placeholder="Enter keyword to search part description" class="form-control" type="text" class="form-control" [(ngModel)]="selectedPart" [ngModelOptions]="{standalone: true}" [ngbTypeahead]="searchPart" [resultTemplate]="rtPart"
+            [inputFormatter]="formatterPart" />
+        </div>
+
+        <div class="type-head-group-list" *ngIf="selectedPart.partID">
+          <ul class="list-group">
+            <strong>Selected Part</strong>
+            <li class="list-group-item no-line"><strong>Part ID:</strong>{{selectedPart?.partID}}</li>
+            <li class="list-group-item no-line"><strong>Part Type:</strong>{{selectedPart?.partType}}</li>
+            <li class="list-group-item no-line"><strong>Part Type:</strong>{{selectedPart?.partType}}</li>
+            <li class="list-group-item no-line"><strong>Part Price:</strong>{{selectedPart?.partPrice}}</li>
+            <li class="list-group-item no-line"><strong>Part Serial#:</strong>{{selectedPart?.partSerialNumber}}</li>
+            <li class="list-group-item no-line"><strong>Part Stock:</strong>{{selectedPart?.partStock}}</li>
+          </ul>
+        </div>
+        <input type="hidden" formControlName="tTicketCreated">
+        <!-- tTicket RepairedPart-->
       </div>
     </div>
+
     <div class="card-footer">
       <small class="text-muted">
        <!-- {{currentUser['fullName']}} -->

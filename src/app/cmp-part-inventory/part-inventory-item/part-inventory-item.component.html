@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-title">
+    <nav class="navbar navbar-light bg-light">
+      <h5 class="card-title">#{{part.partID}}</h5>
+    <a style="cursor: pointer;"
+    [routerLink]="[partId,'edit']"
+    routerLinkActive="active"
+    class="btn btn-outline-info pull-right">
+      edit Part
+    </a>
+  </nav>
+  </div>
+  <div class="card-body">
+    <strong>Part Detail:</strong>
+    <p class="card-text">
+      {{ part.partDetail }}
+    </p>
+    <strong>Part Type:</strong>
+    <p class="card-text">
+      {{ part.partType }}
+    </p>
+    <strong>Part Stock:</strong>
+    <p class="card-text">
+      {{ part.partStock }}
+    </p>
+    <strong>Part Price:</strong>
+    <p class="card-text">
+      {{ part.partPrice | currency:'USD':true }}
+    </p>
+
+    <strong>Part Serial Number :</strong>
+    <p class="card-text">
+      {{ part.partSerialNumber}}
+    </p>
+
+    <strong>Part for ATM Machine :</strong>
+    <p class="card-text">
+      {{ part.atmMachineID}}
+    </p>
+
+  </div>
+  <div class="card-footer">
+    <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+    <small class="text-muted">updated: {{part.updated |  date:'medium' }}</small><br>
+    <i class="fa fa-calendar" aria-hidden="true"></i>
+    <small class="text-muted">created: {{part.created | date:'medium' }}</small>
+  </div>
+
+</div>

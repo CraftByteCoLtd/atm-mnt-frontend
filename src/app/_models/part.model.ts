@@ -8,6 +8,8 @@ export class Part {
   public atmMachineID?: string;
   public created: Date;
   public updated: Date;
+  public id: string;
   constructor() {
+    this.partID = "";
   }
 }

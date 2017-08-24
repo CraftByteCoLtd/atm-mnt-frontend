@@ -14,10 +14,9 @@ import { AuthGuard } from './_guards/index';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
 import { AtmService } from './_services/atm.service';
-import { CurrentUserService } from './_services/current-user.service'
-import { TechnicianTicketService } from './_services/technician-ticket.service'
-
-
+import { CurrentUserService } from './_services/current-user.service';
+import { TechnicianTicketService } from './_services/technician-ticket.service';
+import { PartInventoryService } from './_services/part-inventory.service';
 
 
 import { AppConfigService } from './_services/app-config.service'
@@ -61,6 +60,9 @@ import { UserItemComponent } from './cmp-user/user-item/user-item.component';
 import { AtmItemComponent } from './cmp-atm/atm-item/atm-item.component';
 import { MapWithMarkerComponent } from './cmp-atm/map-with-marker/map-with-marker.component';
 import { TechnicianTicketItemComponent } from './cmp-technician-ticket/technician-ticket-item/technician-ticket-item.component';
+import { VaulterComponent } from './cmp-vaulter/vaulter.component';
+import { PartInventoryItemComponent } from './cmp-part-inventory/part-inventory-item/part-inventory-item.component';
+import { DispatchTicketItemComponent } from './cmp-dispatch-ticket/dispatch-ticket-item/dispatch-ticket-item.component';
 
 
 export function jwtOptionsFactory() {
@@ -115,6 +117,9 @@ export function jwtOptionsFactory() {
     AtmItemComponent,
     MapWithMarkerComponent,
     TechnicianTicketItemComponent,
+    VaulterComponent,
+    PartInventoryItemComponent,
+    DispatchTicketItemComponent
   ],
   imports: [
     BrowserModule,
@@ -136,7 +141,8 @@ export function jwtOptionsFactory() {
   ],
   providers: [
       AuthGuard, AuthenticationService, AppConfigService,
-      UserService, CurrentUserService, AtmService, TechnicianTicketService],
+      UserService, CurrentUserService, AtmService, PartInventoryService,
+      TechnicianTicketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

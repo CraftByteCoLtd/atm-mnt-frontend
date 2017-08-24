@@ -13,7 +13,6 @@ export class TechnicianTicketItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  console.log(this.tt.tTicketResponsiblePerson.fullName);
   }
 
 
