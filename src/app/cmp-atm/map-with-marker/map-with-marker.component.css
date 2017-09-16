@@ -1,3 +1,5 @@
 agm-map {
   height: 400px;
+  min-width: 200px;
+  max-height: 400px;
 }

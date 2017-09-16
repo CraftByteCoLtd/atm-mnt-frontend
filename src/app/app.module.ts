@@ -17,6 +17,8 @@ import { AtmService } from './_services/atm.service';
 import { CurrentUserService } from './_services/current-user.service';
 import { TechnicianTicketService } from './_services/technician-ticket.service';
 import { PartInventoryService } from './_services/part-inventory.service';
+import { DispatchTicketService } from './_services/dispatch-ticket.service';
+
 
 
 import { AppConfigService } from './_services/app-config.service'
@@ -48,10 +50,6 @@ import { PartInventoryComponent } from './cmp-part-inventory/part-inventory.comp
 import { PartInventoryDetailComponent } from './cmp-part-inventory/part-inventory-detail/part-inventory-detail.component';
 import { PartInventoryEditComponent } from './cmp-part-inventory/part-inventory-edit/part-inventory-edit.component';
 import { PartInventoryListComponent } from './cmp-part-inventory/part-inventory-list/part-inventory-list.component';
-import { TresuryComponent } from './cmp-tresury/tresury.component';
-import { TresuryListComponent } from './cmp-tresury/tresury-list/tresury-list.component';
-import { TresuryEditComponent } from './cmp-tresury/tresury-edit/tresury-edit.component';
-import { TresuryDetailComponent } from './cmp-tresury/tresury-detail/tresury-detail.component';
 import { FooterComponent } from './footer/footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { MyDispatchTicketComponent } from './cmp-dispatch-ticket/my-dispatch-ticket/my-dispatch-ticket.component';
@@ -63,6 +61,11 @@ import { TechnicianTicketItemComponent } from './cmp-technician-ticket/technicia
 import { VaulterComponent } from './cmp-vaulter/vaulter.component';
 import { PartInventoryItemComponent } from './cmp-part-inventory/part-inventory-item/part-inventory-item.component';
 import { DispatchTicketItemComponent } from './cmp-dispatch-ticket/dispatch-ticket-item/dispatch-ticket-item.component';
+import { DispatchMapWithMarkersComponent } from './cmp-dispatch-ticket/dispatch-map-with-markers/dispatch-map-with-markers.component';
+import { TreasuryComponent } from './cmp-treasury/treasury.component';
+import { TreasuryListComponent } from './cmp-treasury/treasury-list/treasury-list.component';
+import { TreasuryItemComponent } from './cmp-treasury/treasury-item/treasury-item.component';
+import { TreasuryWithdrawComponent } from './cmp-treasury/treasury-withdraw/treasury-withdraw.component';
 
 
 export function jwtOptionsFactory() {
@@ -105,10 +108,6 @@ export function jwtOptionsFactory() {
     PartInventoryDetailComponent,
     PartInventoryEditComponent,
     PartInventoryListComponent,
-    TresuryComponent,
-    TresuryListComponent,
-    TresuryEditComponent,
-    TresuryDetailComponent,
     FooterComponent,
     HomeComponent,
     MyDispatchTicketComponent,
@@ -119,7 +118,12 @@ export function jwtOptionsFactory() {
     TechnicianTicketItemComponent,
     VaulterComponent,
     PartInventoryItemComponent,
-    DispatchTicketItemComponent
+    DispatchTicketItemComponent,
+    DispatchMapWithMarkersComponent,
+    TreasuryComponent,
+    TreasuryListComponent,
+    TreasuryItemComponent,
+    TreasuryWithdrawComponent
   ],
   imports: [
     BrowserModule,
@@ -140,7 +144,7 @@ export function jwtOptionsFactory() {
     })
   ],
   providers: [
-      AuthGuard, AuthenticationService, AppConfigService,
+      AuthGuard, AuthenticationService, AppConfigService, DispatchTicketService,
       UserService, CurrentUserService, AtmService, PartInventoryService,
       TechnicianTicketService],
   bootstrap: [AppComponent]

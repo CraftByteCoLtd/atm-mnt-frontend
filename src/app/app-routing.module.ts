@@ -30,13 +30,14 @@ import { PartInventoryComponent } from './cmp-part-inventory/part-inventory.comp
 import { PartInventoryDetailComponent } from './cmp-part-inventory/part-inventory-detail/part-inventory-detail.component';
 import { PartInventoryEditComponent } from './cmp-part-inventory/part-inventory-edit/part-inventory-edit.component';
 import { PartInventoryListComponent } from './cmp-part-inventory/part-inventory-list/part-inventory-list.component';
-import { TresuryComponent } from './cmp-tresury/tresury.component';
-import { TresuryListComponent } from './cmp-tresury/tresury-list/tresury-list.component';
-import { TresuryEditComponent } from './cmp-tresury/tresury-edit/tresury-edit.component';
-import { TresuryDetailComponent } from './cmp-tresury/tresury-detail/tresury-detail.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { VaulterComponent } from './cmp-vaulter/vaulter.component';
+import { TreasuryComponent } from './cmp-treasury/treasury.component';
+import { TreasuryListComponent } from './cmp-treasury/treasury-list/treasury-list.component';
+import { TreasuryItemComponent } from './cmp-treasury/treasury-item/treasury-item.component';
+import { TreasuryWithdrawComponent } from './cmp-treasury/treasury-withdraw/treasury-withdraw.component';
+
 
 import { AuthGuard } from './_guards/index';
 
@@ -75,10 +76,8 @@ const appRoutes: Routes = [
 		{ path: ':id', component: PartInventoryDetailComponent },
 		{ path: ':id/edit', component: PartInventoryEditComponent }
 	],canActivate: [AuthGuard] },
-	{ path: 'tresury', component: TresuryComponent, children:[
-		{ path: 'new', component: TresuryEditComponent },
-		{ path: ':id', component: TresuryDetailComponent },
-		{ path: ':id/edit', component: TresuryEditComponent }
+	{ path: 'treasury', component: TreasuryComponent, children:[
+		{ path: ':id/withdraw', component: TreasuryWithdrawComponent }
 	],canActivate: [AuthGuard] },
 	{ path: 'vaulter', component: VaulterComponent,canActivate: [AuthGuard] },
 	{ path: 'page-not-found', component: PageNotFoundComponent },

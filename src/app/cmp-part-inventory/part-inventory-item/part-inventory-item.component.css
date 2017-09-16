@@ -17,9 +17,18 @@
   background: grey;
 }
 
+strong{
+  color:#007bff
+}
 
 .list-group-item{
 	border-left:none;
   border-right:none;
   border-top:none;
+}
+
+
+nav.navbar.bg-light-blue {
+    background-color: #f4f0f0;
+    border-radius: 5px;
 }

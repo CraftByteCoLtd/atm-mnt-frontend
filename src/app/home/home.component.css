@@ -1,0 +1,13 @@
+.jumbotron {
+  background-image: url(/assets/bg.png);
+      background-repeat: no-repeat;
+      background-position: -377px -99px;
+      background-clip: border-box;
+      background-size: auto;
+
+}
+span.badge.badge-pill.badge-rule {
+    box-shadow: 4px 0px 2px #d8d3d3;
+    color: #5186ba;
+    border: 1px solid #fff;
+}

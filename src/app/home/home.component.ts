@@ -10,7 +10,6 @@ export class HomeComponent implements OnInit {
   decodedToken:any;
   fullName:string;
   isLoaded:boolean;
-
   constructor( private jwtHelperService:JwtHelperService) { }
 
   ngOnInit() {}
@@ -19,6 +18,7 @@ export class HomeComponent implements OnInit {
       this.decodedToken = this.jwtHelperService.decodeToken();
       this.fullName = this.decodedToken.fullName;
       this.isLoaded = true;
+      
     }
   }
 

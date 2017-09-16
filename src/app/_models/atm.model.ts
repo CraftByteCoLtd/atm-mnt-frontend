@@ -13,11 +13,11 @@ export class Atm {
   public atmMachineID?:string;
   public atmBalance?: Number;
   public atmNote?: string;
-  public atmStatus?: boolean;
+  public atmStatus?: string;
   public atmLocation?: atmLocation;
   public atmUpdatedBy?: atmUpdatedBy;
-  public created: Date;
-  public updated: Date;
+  public created?: Date;
+  public updated?: Date;
 
   constructor() {
   }

@@ -8,13 +8,25 @@ interface ResponsiblePerson {
   id: string;
 }
 
+interface AtmLocation {
+  lat: Number;
+  lng: Number;
+
+}
+interface DtAtm{
+  atm: Atm;
+  remainingBefore: number;
+  deposit: number;
+  badBill: number;
+  dtAtmStatus: string;
+}
+
 export class DispatchTicket {
   public dtID?: string;
   public dtResponsiblePersons: ResponsiblePerson[];
-  public dtAtms: Atm[];
+  public dtAtms: DtAtm[];
   public dtTechnicianTickets: TechnicianTicket[];
   public dtStatus: string;
-  public dtWithdrawStatus: string;
   public dtWithdrawBalance: number;
   public created?: Date;
   public updated?: Date;

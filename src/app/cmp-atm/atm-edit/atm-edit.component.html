@@ -1,7 +1,7 @@
 <div class="card">
   <form [formGroup]="atmForm" (ngSubmit)="onSubmit()">
     <h3><i class="fa fa-credit-card" aria-hidden="true"></i> Edit ATM</h3>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light bg-light-blue">
       <div class="form-group">
         <button [disabled]="!atmForm.valid" class="btn btn-success" type="submit">Save</button>
         <button class="btn btn-danger pull-right" (click)="onCancel()" type="reset">Cancel</button><br>
@@ -55,8 +55,8 @@
       </div>
     </div>
     <div class="card-body">
-      <strong>Select Location from maps:
-    </strong><br>
+      <h4>Select Location from maps:
+    </h4><br>
       <small class="text-muted">
       <i class="fa fa-map-marker" aria-hidden="true"></i>
       Lattitude & longitute: {{draggedCoord?.lat}},{{draggedCoord?.lng}}</small>

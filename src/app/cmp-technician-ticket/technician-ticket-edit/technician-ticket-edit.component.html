@@ -1,7 +1,7 @@
 <form [formGroup]="ttForm" (ngSubmit)="onSubmit()">
   <div class="card">
     <div class="card-body">
-      <nav class="navbar navbar-light bg-light">
+      <nav class="navbar bg-light-blue">
         <h4>{{ editMode == true ? 'Edit': 'Create'  }} ticket</h4>
         <div class="form-group">
           <button [disabled]="!ttForm.valid" class="btn btn-primary" type="submit">Save</button>
@@ -98,7 +98,7 @@
             <strong>Selected Part</strong>
             <li class="list-group-item no-line"><strong>Part ID:</strong>{{selectedPart?.partID}}</li>
             <li class="list-group-item no-line"><strong>Part Type:</strong>{{selectedPart?.partType}}</li>
-            <li class="list-group-item no-line"><strong>Part Type:</strong>{{selectedPart?.partType}}</li>
+            <li class="list-group-item no-line"><strong>Part Detail:</strong>{{selectedPart?.partDetail}}</li>
             <li class="list-group-item no-line"><strong>Part Price:</strong>{{selectedPart?.partPrice}}</li>
             <li class="list-group-item no-line"><strong>Part Serial#:</strong>{{selectedPart?.partSerialNumber}}</li>
             <li class="list-group-item no-line"><strong>Part Stock:</strong>{{selectedPart?.partStock}}</li>

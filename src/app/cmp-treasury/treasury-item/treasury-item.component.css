@@ -1,0 +1,31 @@
+span.badge.open {
+    background-color: green;
+}
+.card{
+  margin-top:15px;
+  padding:5px;
+
+}
+
+.btn{
+	margin-top:5px;
+}
+
+span.badge.badge-pill.badge-atm {
+    background-color: #b7b2b2;
+}
+
+.row
+{
+	margin-top:10px;
+}
+
+.card{
+  margin-top:15px;
+  padding:15px;
+}
+
+.table thead th{
+  border:none;
+
+}

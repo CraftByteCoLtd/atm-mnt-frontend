@@ -177,8 +177,6 @@ export class TechnicianTicketEditComponent implements OnInit {
       tTicketCreated: new FormControl(editTticketCreated)
 
     });
-    console.log('initForm');
-    console.log(this.tt);
   }
 
   onSubmit() {

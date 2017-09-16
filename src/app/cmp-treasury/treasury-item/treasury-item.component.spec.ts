@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TresuryDetailComponent } from './tresury-detail.component';
+import { TreasuryItemComponent } from './treasury-item.component';
 
-describe('TresuryDetailComponent', () => {
-  let component: TresuryDetailComponent;
-  let fixture: ComponentFixture<TresuryDetailComponent>;
+describe('TreasuryItemComponent', () => {
+  let component: TreasuryItemComponent;
+  let fixture: ComponentFixture<TreasuryItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TresuryDetailComponent ]
+      declarations: [ TreasuryItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TresuryDetailComponent);
+    fixture = TestBed.createComponent(TreasuryItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

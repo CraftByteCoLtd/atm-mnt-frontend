@@ -9,3 +9,13 @@
 a{
 	cursor: pointer;
 }
+
+.bg-light {
+    background-color: #ff9800!important;
+    border-bottom: 2px solid #2196F3;
+    border-radius: 5px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #000;
+}

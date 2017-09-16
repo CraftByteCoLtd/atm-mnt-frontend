@@ -1,0 +1,22 @@
+agm-map {
+  height: 600px;
+  min-width: 200px;
+  max-height: 600px;
+}
+
+.online{
+  background-color: green;
+}
+
+.offline{
+  background-color: red;
+}
+
+
+.open{
+  background-color: blue;
+}
+
+.closed{
+  background-color: gray;
+}

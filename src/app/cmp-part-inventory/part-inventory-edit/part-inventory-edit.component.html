@@ -1,7 +1,7 @@
 <form [formGroup]="partForm" (ngSubmit)="onSubmit()">
   <div class="card">
     <div class="card-body">
-      <nav class="navbar navbar-light bg-light">
+      <nav class="navbar bg-light-blue">
         <h4>{{ editMode == true ? 'Edit': 'Create'  }} Part </h4>
         <div class="form-group">
           <button [disabled]="!partForm.valid" class="btn btn-primary" type="submit">Save</button>

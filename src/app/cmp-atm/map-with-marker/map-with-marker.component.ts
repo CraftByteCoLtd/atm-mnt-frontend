@@ -12,7 +12,7 @@ export class MapWithMarkerComponent implements OnInit, OnChanges {
   @Output() onDraggedLocation = new EventEmitter<marker>();
   lat: number = 39.90183534416827;
   lng: number = -101.11713409423828;
-  zoom: number = 10;
+  zoom: number = 15;
   markItem: marker;
   markers: marker[] = []
   selectedCoord: any;
@@ -29,8 +29,6 @@ export class MapWithMarkerComponent implements OnInit, OnChanges {
   }
   ngOnChanges() {
     if (this.atm) {
-
-      console.log(this.atm)
       this.lat = +this.atm.atmLocation.lat;
       this.lng = +this.atm.atmLocation.lng;
 

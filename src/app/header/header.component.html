@@ -62,11 +62,11 @@
             <a class="nav-link dropdown-toggle"
               ngbDropdownToggle
               aria-haspopup="true"
-              aria-expanded="false">Manage Tresury</a>
+              aria-expanded="false">Manage Treasury</a>
             <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="manage-tresury-dropdown">
               <a
-              [routerLink]="['tresury']"
-              class="dropdown-item" ><i class="fa fa-money" aria-hidden="true"></i> Manage Tresury</a>
+              [routerLink]="['treasury']"
+              class="dropdown-item" ><i class="fa fa-money" aria-hidden="true"></i> Manage Treasury</a>
             </div>
          </li>
          <li
@@ -91,7 +91,7 @@
          </li>
          <li *ngIf="isLoggedIn">
            <div class="pull-right">
-             <a  [routerLink]="['/login']" class="btn btn-danger">Logout</a>
+             <button (click)="onLogout()" class="btn btn-danger btn-sm">Logout</button>
            </div></li>
        </ul>
 

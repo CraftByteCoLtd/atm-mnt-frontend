@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,9 @@ export class HeaderComponent implements OnInit {
   isLoggedIn = false;
 
   constructor(
-    private jwtHelperService: JwtHelperService
+    private jwtHelperService: JwtHelperService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -49,6 +52,12 @@ export class HeaderComponent implements OnInit {
   }
   collapsedMenu() {
     this.isCollapsed = !this.isCollapsed;
+  }
+  onLogout(){
+    let cfResult  = confirm('Confirm to logout?');
+    if (cfResult === false) return;
+    this.router.navigate(['/login'], { relativeTo: this.route });
+
   }
 
 }

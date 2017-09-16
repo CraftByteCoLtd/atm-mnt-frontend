@@ -85,7 +85,7 @@ export class AtmEditComponent implements OnInit, OnDestroy {
     let editAtmLocationLat:number;
     let editAtmLocationLng:number;
     let editAtmNote: string;
-    let editAtmStatus: boolean;
+    let editAtmStatus: string;
 
 
     if (this.editMode) {

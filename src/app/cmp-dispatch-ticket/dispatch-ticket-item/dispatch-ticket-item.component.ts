@@ -10,10 +10,11 @@ export class DispatchTicketItemComponent implements OnInit {
   @Input() dt: DispatchTicket;
   @Input() dtId: string;
 
+
   constructor() { }
 
   ngOnInit() {
-  
+
   }
 
 }

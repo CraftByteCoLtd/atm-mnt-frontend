@@ -1,10 +1,14 @@
-<div class="col-md-6 col-md-offset-3" style="margin-top:15px;">
-    <div class="card" [ngClass]="{slideInDown:isLoaded, animated: isLoaded}" style="width: 20rem;">
-      <img class="card-img-top" style="height:138px;" src="http://lorempixel.com/380/180/city/" class="zoomInRight">
-      <div class="card-block">
-        <h5 class="card-title">Welcome : {{fullName}}</h5>
-        <p class="card-text">Lorem ipsum dolor sit ametsunt in culpa qui officia deserunt mollit anim id est laborum..</p>
-        <a [routerLink]="['/login']" class="btn btn-danger">Logout</a>
-      </div>
+<div class="jumbotron jumbotron-fluid" [ngClass]="{slideInDown:isLoaded, animated: isLoaded}">
+  <div class="container">
+    <!-- <img style="position: absolute;left: -10px;top: -19px;height: 100%;z-index: -10;" src="/assets/bg.png" class="zoomInRight"> -->
+    <h4 [ngClass]="{jello:isLoaded, animated: isLoaded}" class="display-4">Welcome : {{fullName}}</h4>
+    <div class="lead">
+      <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isAtmVaulter"><i class="fa fa-user-circle" aria-hidden="true"></i>Vaulter</span>
+      <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isTreasurer"><i class="fa fa-user-circle" aria-hidden="true"></i>Treasurer</span>
+      <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isAtmTechnician"><i class="fa fa-user-circle" aria-hidden="true"></i>Technician</span>
+      <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isDispatcherManager"><i class="fa fa-user-circle" aria-hidden="true"></i>Dispatcher Manager</span>
+      <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isWareHouseManager"><i class="fa fa-user-circle" aria-hidden="true"></i>WareHouse Manager</span>
+      <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isAdmin"><i class="fa fa-user-circle" aria-hidden="true"></i>Admin</span>
     </div>
+  </div>
 </div>

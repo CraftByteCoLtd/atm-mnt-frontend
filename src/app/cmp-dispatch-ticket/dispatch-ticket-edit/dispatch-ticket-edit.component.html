@@ -1,3 +1,243 @@
-<p>
-  dispatch-ticket-edit works!
-</p>
+<div class="card">
+  <h3><i class="fa fa-credit-card" aria-hidden="true"></i> {{ editMode? 'Edit': 'Create'}} Dispatch Ticket</h3>
+  <div class="card-body">
+    <h4 class="card-title">Dispatch Ticket ID :{{ editMode? dt.dtID : 'New' }} </h4>
+    <nav class="navbar bg-light-blue">
+      <div class="form-group">
+        <button [disabled]="!dtForm.valid" class="btn btn-primary" (click)="onSubmit()"  type="submit">Save</button>
+        <button class="btn btn-danger pull-right" (click)="onCancel()" type="reset">Cancel</button><br>
+      </div>    </nav>
+    <div class="row">
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="form-group">
+          <label for="subscription">ResponsiblePerson: </label>
+          <!-- ResponsiblePerson  -->
+          <ng-template #rtPerson let-r="result" let-t="term">
+            <div class="type-head-item">
+              {{ r?.fullName }}
+            </div>
+          </ng-template>
+          <div class="input-group">
+            <span class="input-group-addon"><strong><i class="fa fa-search" aria-hidden="true"></i> Search</strong></span>
+            <input id="typeahead-template"
+              placeholder="Enter Vaulter name to search."
+              class="form-control" type="text"
+              class="form-control"
+              [(ngModel)]="selectedResponsiblePerson"
+              [ngModelOptions]="{standalone: true}"
+              [ngbTypeahead]="searchPerson"
+              [resultTemplate]="rtPerson"
+              [inputFormatter]="formatterPerson" />
+          </div>
+            <div class="type-head-group-list" *ngIf="selectedResponsiblePerson.fullName">
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-secondary"><strong> Search Result</strong></li>
+                <li class="list-group-item"> <span class="caption">First Name :</span> {{selectedResponsiblePerson.firstName}}</li>
+                <li class="list-group-item"> <span class="caption">Last Name :</span> {{selectedResponsiblePerson.lastName}}</li>
+                <li class="list-group-item">
+                  <button class="btn btn-success"
+                  (click)="addResponsiblePersonToList()">
+                  <i class="fa fa-plus-circle" aria-hidden="true"></i> Add to Responsible Persons
+                </button>
+                </li>
+              </ul>
+          </div>
+      </div>
+      <div class="type-head-group-list">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <h4> Responsible Persons </h4>
+        </li>
+        <li class="list-group-item" *ngIf="listResponsiblePerson.length === 0"> - No Selections - </li>
+        <li class="list-group-item" *ngFor="let rp of listResponsiblePerson;let i= index">
+           <strong class="pull-left"> {{ i+1 }} : {{ rp.fullName}}</strong>
+           <button class=" btn btn-danger btn-sm pull-right"
+            (click)="removeResponsiblePerson(i)">
+            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+            Remove</button>
+           <div class="pull-right">
+             <a class="caption" *ngFor="let ph of rp.userPhones" href="tel:{{ph.number}}"><i class="fa fa-phone" aria-hidden="true"></i> {{ ph.desc }}:{{ph.number}}</a>
+           </div>
+        </li>
+      </ul>
+    </div>
+    </div>
+
+  </div>
+  <div class="row" *ngIf="listResponsiblePerson?.length">
+    <div class="col-md-12">
+      <!-- atm list  -->
+        <ul class="list-group">
+          <li class="list-group-item">
+            <h3>Select Service ATM Machine </h3>
+          </li>
+          <li class="list-group-item">
+            <div class="form-inline">
+              <label for="atmFilter">
+                The remaining balance is lower than
+              </label>
+              <input
+                name="atmFilter"
+                class="form-control" type="number"
+                class="form-control"
+                [(ngModel)]="atmFilter"
+                [ngModelOptions]="{standalone: true}"/>
+               <button class="btn btn-success" (click)="getAtmsList()">
+                 Apply
+               </button>
+
+            </div>
+               <small>by Default  500$ < Balance </small>
+          </li>
+          <li class="list-group-item">
+            <div>
+              <ngx-datatable
+                style="width: 100%"
+                class="material"
+                [rows]="atms"
+                [columnMode]="'force'"
+                [headerHeight]="65"
+                [footerHeight]="50"
+                [rowHeight]="'auto'"
+                [limit]="5"
+                [selected]="selectedAtms"
+                [selectionType]="'checkbox'"
+                (activate)="onActivate($event)"
+                (select)='onSelect($event)'>
+                <ngx-datatable-column
+                  [width]="30"
+                  [sortable]="false"
+                  [canAutoResize]="false"
+                  [draggable]="false"
+                  [resizeable]="false"
+                  [headerCheckboxable]="true"
+                  [checkboxable]="true">
+                </ngx-datatable-column>
+                <ngx-datatable-column prop="atmMachineID"
+                  headerClass="headerText" name="ATM Machine ID "></ngx-datatable-column>
+                <ngx-datatable-column
+                  headerClass="headerText" prop="atmBalance" name="Remaining Balance"></ngx-datatable-column>
+                <ngx-datatable-column
+                  headerClass="headerText" prop="atmStatus" name="Status"></ngx-datatable-column>
+                <ngx-datatable-column
+                  headerClass="headerText" prop="atmLocation">
+                  <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                    <span (click)="sort()">{{column.name}}</span>
+                  </ng-template>
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+               <ng-template #popContent>
+                 <div style="width:250px;" >
+                 <app-map-with-marker (onDraggedLocation)="onGetDraggedLocation($event)" [atm]="row" >
+                 </app-map-with-marker>
+               </div>
+               </ng-template>
+               <button type="button"
+               [ngbPopover]="popContent"
+                #p="ngbPopover"
+                class="btn btn-outline-secondary btn-sm"
+                triggers="click:mouseleave"  placement="top"
+                container="body">
+             		<i class="fa fa-map-marker" aria-hidden="true"></i> location
+             		</button>
+              </ng-template>
+              </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <h6>Selections <small>({{selectedAtms?.length}})</small></h6>
+              <span class="badge badge-pill badge-info" *ngFor='let sel of selectedAtms'>
+                  {{sel.atmMachineID}}
+                </span>
+              <small *ngIf="!selectedAtms?.length">- No Selections -</small>
+          </li>
+        </ul>
+    </div>
+  </div>
+<!-- TechnicianTicket -->
+<div class="row" *ngIf="selectedAtms?.length && listResponsiblePerson?.length">
+  <div class="col-md-12">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <h4>Select Technician Ticket (Open) </h4>
+        </li>
+        <li class="list-group-item">
+          <div class="resonsible-person-grid">
+            <ngx-datatable
+              style="width: 100%;min-width:400px;"
+              class="material"
+              [rows]="tTickets"
+              [columnMode]="'force'"
+              [headerHeight]="65"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="5"
+              [selected]="selectedTTickets"
+              [selectionType]="'checkbox'"
+              (activate)="onTTicketsActivate($event)"
+              (select)='onTTicketSelect($event)'>
+              <ngx-datatable-column
+                [width]="30"
+                [sortable]="false"
+                [canAutoResize]="false"
+                [draggable]="false"
+                [resizeable]="false"
+                [headerCheckboxable]="true"
+                [checkboxable]="true">
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="tTicketID"
+                [width]="50"
+                headerClass="headerText" name="Ticket ID "></ngx-datatable-column>
+              <ngx-datatable-column
+                [width]="50"
+                  headerClass="headerText" prop="atmMachineID" name="ATM ID"></ngx-datatable-column>
+              <ngx-datatable-column
+                [width]="150"
+                headerClass="headerText" prop="tTicketCreated" name="Created">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{value | date: 'medium'}}
+              </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column
+                headerClass="headerText" name="More Detail">
+                <ng-template let-column="column" ngx-datatable-header-template>
+                  <span>{{column.name}}</span>
+                </ng-template>
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <div>
+                    <dl>
+                        <dt>Symptom</dt>
+                        <dd>{{row.tTicketSymptom}}</dd>
+                        <dt>Solution</dt>
+                        <dd>{{row.tTicketSolution}}</dd>
+                        <dt>ResponsiblePerson</dt>
+                        <dd>{{row.tTicketResponsiblePerson.fullName}}</dd>
+                        <dt>Repaired Part</dt>
+                        <dd>
+                          {{row.tTicketRepairedPart.partID}}
+                          <small>{{row.tTicketRepairedPart.partDetail}}</small>
+                          <small>{{row.tTicketRepairedPart.partSerialNumber}}</small>
+                        </dd>
+                    </dl>
+                </div>
+            </ng-template>
+            </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <h6>Selections <small>({{selectedTTickets?.length}})</small></h6>
+            <span class="badge badge-pill badge-info" *ngFor='let sel of selectedTTickets'>
+                {{sel.tTicketID}}
+              </span>
+            <small *ngIf="!selectedTTickets?.length">- No Selections -</small>
+        </li>
+      </ul>
+  </div>
+</div>
+<!-- End TechnicianTicket -->
+</div>
+<div class="card-footer">
+
+</div>
+</div>

@@ -30,3 +30,9 @@
 .type-head-group-list > strong{
   color:red;
 }
+
+
+nav.navbar.bg-light-blue {
+    background-color: #f4f0f0;
+    border-radius: 5px;
+}

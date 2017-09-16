@@ -4,15 +4,12 @@
       <div class="card-block">
 
         <div class="form-group">
-          <button class="btn btn-success pull-right">New Dispatch Ticket</button>
+          <button 
+          *ngIf="this.currentUser.authRules.isDispatcherManager === true" 
+          class="btn btn-success pull-right"  (click)="onAddNew()">New</button>
         </div>
-        <h4 class="card-title"><i class="fa fa-atm" aria-hidden="true"></i>Manage Dispatch Ticket</h4>
-        <nav class="navbar navbar-light bg-light">
-          <form class="form-inline">
-            <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </nav>
+        <br><br>
+        <h5 class="card-title"><i class="fa fa-atm" aria-hidden="true"></i>Manage Dispatch Ticket</h5>
         <app-dispatch-ticket-item *ngFor="let dt of dts " [dt]="dt" [dtId]="dt._id"></app-dispatch-ticket-item>
       </div>
     </div>

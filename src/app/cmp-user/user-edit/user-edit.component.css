@@ -21,6 +21,7 @@ input.ng-invalid  {
 label{
   font-weight: bold;
   padding-right:5px;
+  
 }
 
 .form-row{
@@ -43,4 +44,9 @@ label.label-fix-width {
 }
 .form-group.mx-sm-6 {
     padding-top: 10px;
+}
+
+nav.navbar.bg-light-blue {
+    background-color: #f4f0f0;
+    border-radius: 5px;
 }

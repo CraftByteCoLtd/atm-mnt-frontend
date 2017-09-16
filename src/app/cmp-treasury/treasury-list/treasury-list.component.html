@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-md-12">
+   <nav class="navbar bg-light-blue">
+                <h5><i class="fa fa-atm" aria-hidden="true"></i>Managed Dispatch Ticket by Treasury</h5>
+      </nav>
+        <app-treasury-item *ngFor="let dt of dts " [dt]="dt" [dtId]="dt._id"></app-treasury-item>
+
+  </div>
+</div>
