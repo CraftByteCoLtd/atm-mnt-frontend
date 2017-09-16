@@ -18,7 +18,7 @@ import { CurrentUserService } from './_services/current-user.service';
 import { TechnicianTicketService } from './_services/technician-ticket.service';
 import { PartInventoryService } from './_services/part-inventory.service';
 import { DispatchTicketService } from './_services/dispatch-ticket.service';
-
+import { TreasuryService } from './_services/treasury.service';
 
 
 import { AppConfigService } from './_services/app-config.service'
@@ -145,7 +145,7 @@ export function jwtOptionsFactory() {
   ],
   providers: [
       AuthGuard, AuthenticationService, AppConfigService, DispatchTicketService,
-      UserService, CurrentUserService, AtmService, PartInventoryService,
+      UserService, CurrentUserService, AtmService, PartInventoryService,TreasuryService,
       TechnicianTicketService],
   bootstrap: [AppComponent]
 })

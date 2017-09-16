@@ -86,6 +86,14 @@ export class DispatchTicketService {
       });
   }
 
+  doWithdrawDispatchTicket(withdrawItem: any): Observable<DispatchTicket> {
+    return this.http.post(this.appConfig.getApiEndPoint('manage-dt/do-withdraw'), withdrawItem)
+      .catch(
+      (error: Response) => {
+        return Observable.throw(error);
+      });
+  }
+
   getTechnicianTicketsByAtms(atmIDs:string[]): Observable<TechnicianTicket[]> {
     return this.http.post(this.appConfig.getApiEndPoint('manage-tt/tt-list-by-atms'),{selectedAtmIDs: atmIDs})
       .map((response) => {

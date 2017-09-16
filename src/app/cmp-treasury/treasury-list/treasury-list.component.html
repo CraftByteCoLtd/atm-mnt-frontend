@@ -1,9 +1,57 @@
-<div class="row">
-  <div class="col-md-12">
-   <nav class="navbar bg-light-blue">
-                <h5><i class="fa fa-atm" aria-hidden="true"></i>Managed Dispatch Ticket by Treasury</h5>
-      </nav>
-        <app-treasury-item *ngFor="let dt of dts " [dt]="dt" [dtId]="dt._id"></app-treasury-item>
+<ng-template #popContent>
+<div class="pull-right ">
+	<label for="txtRemaining">
+		Current Balance :
+	</label>
+	<h3 class="pull-left">{{trs?.treasuryBalance | currency:'USD':true}}</h3>
+	<br>
+	<p for="txtRemaining" class="pull-left">
+		New Balance :
+	</p>
+	<input class="form-control " name="txtRemaining" type="number"  [(ngModel)] ="txtUpdateBalance">
+	<button class="btn btn-primary" (click)="updateTreasuryBalance();p.close()" type="submit">Update</button>
+	<button class="btn btn-danger" (click)="p.close()">Cancel</button>
+</div>
+</ng-template>
 
-  </div>
+<ng-template #popLogContent>
+<ul class="list-group">
+ <li class="list-group-item" *ngFor="let tl of trsLogs ">
+  <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+  <small>{{ tl.updated | date:'medium' }}</small>
+  <h5 class="log-text">{{tl?.oldBalance | currency:'USD':true}}</h5>
+  <h5 class="log-text"><i class="fa fa-arrow-down" aria-hidden="true"></i></h5>
+  <h5 class="log-text">{{tl?.newBalance | currency:'USD':true}}</h5>
+  <i class="fa fa-user-plus-o" aria-hidden="true"></i>
+  <small>by: {{ tl.updatedBy}}</small>
+ </li>
+</ul>
+
+</ng-template>
+<div class="row">
+	<div class="col-md-12">
+		<nav class="navbar bg-light-blue">
+			<h4>
+			<i _ngcontent-c1="" aria-hidden="true" class="fa fa-money"></i>
+			Managed Dispatch Ticket by Treasury</h4>
+			<div class="balance-box">
+				<span class="pull-right badge bedge-pill badge-secondary">Remaining</span>
+				<h3 class="pull-right">{{trs?.treasuryBalance | currency:'USD':true}}</h3><br>
+				<div class="btn-group" role="group" aria-label="Basic example">
+
+					<button 
+					placement="bottom" triggers="mouseenter:mouseleave"
+					[ngbPopover]="popLogContent" container="body"  #pl="ngbPopover" popoverTitle="Latest 10 updated log"
+					type="button" class="btn btn-light"><i class="fa fa-history" aria-hidden="true"></i> Latest 10 records Logs</button>
+
+					<button type="button" class="btn btn-primary pull-right"
+					placement="bottom" container="body"
+					[ngbPopover]="popContent"  #p="ngbPopover" popoverTitle="Update Treasury Balance">
+					Update Treasury
+					</button>  
+				</div>
+			</div>
+		</nav>
+	<app-treasury-item *ngFor="let dt of dts " [dt]="dt" [dtId]="dt._id"></app-treasury-item>
+</div>
 </div>

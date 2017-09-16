@@ -16,11 +16,11 @@
 								</span></td>
 							</tr>
 							<tr>
-								<td colspan="2">			<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+								<td colspan="2"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>
 								<small>created: {{ dt.created | date:'medium' }}</small></td>
 							</tr>
 							<tr>
-								<td colspan="2">			<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+								<td colspan="2"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>
 								<small>updated: {{ dt.updated | date:'medium' }}</small></td>
 							</tr>
 							
@@ -62,25 +62,33 @@
 					</table>
 				</div>
 				<div class="col-sm">
-					<strong>Total Remaining Balance</strong>
+					<strong>Total Machines Remaining Balance</strong>
 					<small class="form-text text-muted">Dispatch {{dt.dtAtms?.length }} machines.</small>
-					<h5>{{sumRemainingBallance | currency:'USD':true}}</h5>
+					<h5>{{sumRemainingBalance | currency:'USD':true}}</h5>
 					<hr>
 					<strong>Withdraw</strong><br>
+					<h5>{{dt.dtWithdrawBalance | currency:'USD':true}}</h5>
+					<form
+					 *ngIf="dt.dtStatus==='open'"
+					 #f="ngForm" (ngSubmit)="onWithdraw(f)" novalidate>
 					<div class="form-group form-inline">
 						<label for="txtWithdrawAmount">Total: </label>
-						<input type="number" class="form-control" id="txtWithdrawAmount"  placeholder="0.00">
+						<input ngModel required #txtWithdrawAmount name="txtWithdrawAmount" 
+						type="number" class="form-control" id="txtWithdrawAmount" placeholder="0.00">
 						<small class="form-text text-muted">enter amount of withdraw.</small>
 					</div>
-					<button
+					<button [disabled]="!f.valid" 
 					ngbTooltip="Change the status from (open) to (Withdraw) by Treasurer " triggers="mouseenter:mouseleave" popoverTitle="Withdraw" container="body"
-					class="btn btn-warning" (click)="onWithdraw()">Withdraw</button>
+					class="btn btn-warning" type="submi">Withdraw</button>
+					</form>
 					<hr>
+					<div *ngIf="dt.dtStatus==='complete'">
 					<strong>Closed Ticket : </strong>
-					<button ngbTooltip="
-					Change the status to (closed) by Treasurer when recieved return money or Bad bill from vaulter.
+					<button
+					 ngbTooltip="Change the status to (closed) by Treasurer when recieved return money or Bad bill from vaulter.
 					" triggers="mouseenter:mouseleave" popoverTitle="Return Recieved" container="body"
-					class="btn btn-danger" (click)="onRevieved()">Recieved/Return</button>
+					class="btn btn-danger" (click)="onRecived()">Recieved/Return</button>
+					
 				</div>
 			</div>
 			<div class="row">

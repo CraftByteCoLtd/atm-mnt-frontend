@@ -1,3 +1,7 @@
+span.badge.withdraw {
+    background-color: orange;
+}
+
 span.badge.open {
     background-color: green;
 }
