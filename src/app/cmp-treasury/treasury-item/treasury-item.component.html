@@ -5,7 +5,11 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Dispatch ID :<h5>{{ dt.dtID }}</h5></th>
+							<th>Dispatch ID :<h5><a style="cursor: pointer;" [routerLink]="['../dispatch-ticket/',dtId]">  
+							{{ dt.dtID }}
+							<i class="fa fa-external-link-square" aria-hidden="true"></i>
+							</a></h5></th>
+
 						</tr>
 					</thead>
 					<tbody>
@@ -46,9 +50,58 @@
 							<tr>
 								<td>
 									<strong>ATM Machines:</strong>
-									<span class="badge badge-pill badge-atm" *ngFor="let dta of dt.dtAtms ">
-										{{dta.atm.atmMachineID}}
-									</span>
+									<table>
+										<tr>
+											<th>ATM</th>
+											<th>Expected Remaining</th>
+											<th>Actual Remaining</th>
+											<th>Deposit</th>
+											<th>Bad Bill</th>
+											<th>Expected Balance</th>
+											<th>Actual Balance</th>
+
+										</tr>
+										<tr *ngFor="let dta of dt.dtAtms ">
+											<td>{{dta.atm.atmMachineID}}</td>
+											<td>{{dta.remainingBefore}}</td>
+											<td>{{dta.actualRemaining}}</td>
+											<td>{{dta.deposit}}</td>
+											<td>{{dta.badBill}}</td>
+											<td>{{(dta.remainingBefore + dta.deposit ) - dta.badBill}}</td>
+											<td>{{(dta.actualRemaining + dta.deposit ) - dta.badBill}}</td>
+
+
+										</tr>
+										<tr>
+											<td><strong>Summary</strong></td>
+											<td>
+												<strong>{{ sumRemainingBalance | currency:'USD':true}}
+												</strong>
+											</td>
+																						<td>
+												<strong>{{ sumActualRemaining | currency:'USD':true}}
+												</strong>
+											</td>
+											<td>
+												<strong>{{ sumDeposit | currency:'USD':true}}
+												</strong>
+											</td>
+											<td>
+												<h5>{{ sumBadBill | currency:'USD':true}}
+												</h5>
+											</td>
+											<td>
+												<strong>{{ sumCurrentBalance | currency:'USD':true}}
+												</strong>
+											</td>
+																						<td>
+												<strong>{{ sumActualBalance | currency:'USD':true}}
+												</strong>
+											</td>
+										</tr>
+									</table>
+	
+
 								</td>
 							</tr>
 							<tr>
@@ -79,15 +132,24 @@
 					</div>
 					<button [disabled]="!f.valid" 
 					ngbTooltip="Change the status from (open) to (Withdraw) by Treasurer " triggers="mouseenter:mouseleave" popoverTitle="Withdraw" container="body"
-					class="btn btn-warning" type="submi">Withdraw</button>
+					class="btn btn-warning" type="submit">Withdraw</button>
 					</form>
 					<hr>
-					<div *ngIf="dt.dtStatus==='complete'">
+					<div *ngIf="dt.dtStatus==='completed'">
 					<strong>Closed Ticket : </strong>
-					<button
+					<form
+					 #rf="ngForm" (ngSubmit)="onRecieved(rf)" novalidate>
+					<div class="form-group form-inline">
+						<label for="txtReturnAmount">Total Return BadBills: </label>
+						<input ngModel required #txtReturnAmount name="txtReturnAmount" 
+						type="number" class="form-control" id="txtReturnAmount" placeholder="0.00">
+						<small class="form-text text-muted">enter amount of return bills.</small>
+					</div>
+					<button [disabled]="!rf.valid" 
 					 ngbTooltip="Change the status to (closed) by Treasurer when recieved return money or Bad bill from vaulter.
 					" triggers="mouseenter:mouseleave" popoverTitle="Return Recieved" container="body"
-					class="btn btn-danger" (click)="onRecived()">Recieved/Return</button>
+					class="btn btn-danger" type="submit">Recieved/Return</button>
+					</form>
 					
 				</div>
 			</div>

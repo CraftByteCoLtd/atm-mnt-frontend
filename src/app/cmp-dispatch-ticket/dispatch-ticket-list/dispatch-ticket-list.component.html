@@ -4,6 +4,9 @@
       <div class="card-block">
 
         <div class="form-group">
+          <button disabled 
+          class="btn btn-outline-info pull-left"  >Export CSV</button>
+
           <button 
           *ngIf="this.currentUser.authRules.isDispatcherManager === true" 
           class="btn btn-success pull-right"  (click)="onAddNew()">New</button>

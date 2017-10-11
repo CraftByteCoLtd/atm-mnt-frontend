@@ -6,3 +6,15 @@ span.badge.open {
 span.badge.withdraw {
     background-color: orange;
 }
+
+
+span.badge.recieved{
+  background: #009688;
+}
+.completed{
+  background: #673ab7;
+}
+
+.closed{
+	background:#ccc;
+}

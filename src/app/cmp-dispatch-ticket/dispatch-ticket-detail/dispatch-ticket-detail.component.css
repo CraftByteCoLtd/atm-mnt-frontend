@@ -4,6 +4,10 @@
   min-width: 250px;
 }
 
+.card-body{
+  padding:0px;
+}
+
 .open{
   background: green;
 }
@@ -12,6 +16,27 @@
   background: grey;
 }
 
+.recieved{
+  background: #009688;
+}
+
+.completed{
+  background: #673ab7;
+}
+
+.withdraw {
+  background: orange;
+}
+
+
+a.breadcrumb-item{
+  color:#888;
+}
+
+a.breadcrumb-item.active {
+    color: #007bff;
+    font-weight: bold;
+}
 
 .list-group-item{
 	border-left:none;
@@ -27,3 +52,13 @@ nav.navbar.bg-light-blue {
 .btn-group{
   margin-top:5px;
 }
+.btn-recieved{
+  color:#fff;
+  background: #009688;
+}
+
+.btn-completed{
+  background: #8bc34a;
+  color:#fff;
+}
+

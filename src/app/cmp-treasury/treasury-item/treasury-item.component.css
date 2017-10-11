@@ -33,3 +33,14 @@ span.badge.badge-pill.badge-atm {
   border:none;
 
 }
+
+.recieved{
+  background: #009688;
+}
+
+.completed{
+  background: #673ab7;
+}
+.closed{
+  background: #999;
+}

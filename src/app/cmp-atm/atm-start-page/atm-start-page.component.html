@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-block">
+        <div class="form-group" *ngIf="this.currentUser.authRules.isAdmin === true">
+        </div>
+        <h4 class="card-title"><i class="fa fa-atm" aria-hidden="true"></i>ATM Machine Detail</h4>
+
+        <nav class="navbar navbar-light bg-light-blue">
+        <strong>Total :<h5>{{ sumBalance | currency:'USD':true}}</h5></strong>
+        <div class="pull-right">
+<!-- <label class="custom-control custom-radio">
+  <input id="radio_all" name="radio" type="radio"  (click)="getAtmsByStatus('all')"class="custom-control-input">
+  <span class="custom-control-indicator"></span>
+  <span class="custom-control-description">All</span>
+</label>
+<label class="custom-control custom-radio">
+  <input id="radio_online" name="radio" type="radio"  (click)="getAtmsByStatus('online')"class="custom-control-input">
+  <span class="custom-control-indicator"></span>
+  <span class="custom-control-description">Online</span>
+</label>
+<label class="custom-control custom-radio">
+  <input id="radio_offline" name="radio" type="radio"  (click)="getAtmsByStatus('offline')"class="custom-control-input">
+  <span class="custom-control-indicator"></span>
+  <span class="custom-control-description">Offline</span>
+</label> -->
+
+
+<div class="form-check form-check-inline">
+  <label class="form-check-label">
+    <input (click)="getAtmsByStatus('all')"
+    class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> All
+  </label>
+</div>
+<div class="form-check form-check-inline">
+  <label class="form-check-label">
+    <input (click)="getAtmsByStatus('online')"
+    class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Online
+  </label>
+</div>
+<div class="form-check form-check-inline">
+  <label class="form-check-label">
+    <input (click)="getAtmsByStatus('offline')"
+    class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" > Offline
+  </label>
+</div>
+<br>
+<strong>  #Machine : {{ markers.length }}</strong>
+        </div>
+
+        </nav>
+        <div class="img-thumbnail">
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false">
+            <agm-marker *ngFor="let m of markers;let i = index" [latitude]="m.lat" [longitude]="m.lng" [markerDraggable]="m.draggable">
+              <agm-info-window>
+                <h5>
+                {{m?.name}}
+                </h5>
+                Atm Status :
+                <span class="badge badge-pill {{ m?.status}}">
+                  {{ m?.status}}
+                </span>
+                <dl>
+                  <dt>Current Balance:</dt>
+                  <dd>{{ m?.balance | currency:'USD':true}}</dd>
+                  <dt>Note:</dt>
+                  <dd>{{ m?.desc}}</dd>
+                </dl>
+              </agm-info-window>
+            </agm-marker>
+          </agm-map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

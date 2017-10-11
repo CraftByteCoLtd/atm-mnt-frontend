@@ -17,12 +17,16 @@
             {{m?.desc.dtAtmStatus}}
             </span>
             </dd>
-            <dt>Current Balance:</dt>
+            <dt>Expected Remaining:</dt>
             <dd>{{m?.balance | currency:'USD':true}}</dd>
+            <dt>Actual Remaining:</dt>
+            <dd>{{m?.actualBalance | currency:'USD':true}}</dd>
             <dt>Deposit Bill:</dt>
             <dd>{{m?.desc.deposit | currency:'USD':true}}</dd>
             <dt>Bad Bill:</dt>
             <dd>{{m?.desc.badBill | currency:'USD':true}}</dd>
+            <dt>Current Balance:</dt>
+            <dd>{{(m?.actualBalance + m?.desc.deposit)-m?.desc.badBill  | currency:'USD':true}}</dd>
           </dl>
 
         </div>

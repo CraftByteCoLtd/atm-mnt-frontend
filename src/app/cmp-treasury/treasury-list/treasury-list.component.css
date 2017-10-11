@@ -14,13 +14,23 @@ nav.navbar.bg-light-blue {
 }
 .balance-box{
 	padding: 5px;
-    _border: 1px dotted #0a72e1;
     margin: 5px;
     border-radius: 5px;
-    /*max-width: 400px;*/
-    /*width*/: 350px;
-    _margin-right: 68px;
 }
 .log-text{
 	font-size:small;
+}
+
+.log-new-balance{
+    color:#0a72e1;
+}
+li.list-group-item.log-item-box {
+    padding: 0;
+    border: 1px dotted lightblue;
+    border-style: none none dotted none;
+    margin-bottom: 10px;
+    padding-bottom: 10px;}
+
+.update-balance-box{
+    padding-bottom: 15px;
 }

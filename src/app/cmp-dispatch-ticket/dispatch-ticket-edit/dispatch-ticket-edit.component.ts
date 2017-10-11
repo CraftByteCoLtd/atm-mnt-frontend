@@ -146,7 +146,6 @@ export class DispatchTicketEditComponent implements OnInit {
    }
 
    onTTicketSelect({ selected }) {
-     //  console.log('Select Event', selected, this.selectedAtms);
       this.selectedTTickets.splice(0, this.selectedTTickets.length);
       this.selectedTTickets.push(...selected);
     }
@@ -173,6 +172,7 @@ export class DispatchTicketEditComponent implements OnInit {
              ({
                 "atm": ia,
                 "remainingBefore":ia.atmBalance,
+                "actualRemaining": 0,
                 "deposit":0,
                 "badBill":0,
                 "dtAtmStatus":'open'
@@ -238,14 +238,12 @@ interface ResponsiblePerson {
 }
 
 interface DtAtm{
-  // atmMachineID: string;
   atm: Atm;
   remainingBefore: number;
+  actualRemaining: number;
   deposit: number;
   badBill: number;
   dtAtmStatus: string;
-  // atmLocation:AtmLocation;
-  // atmStatus:string;
 }
 
 interface AtmLocation {

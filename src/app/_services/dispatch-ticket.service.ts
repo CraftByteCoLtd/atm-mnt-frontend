@@ -15,10 +15,13 @@ import { DispatchTicket } from '../_models/dispatch-ticket.model';
 @Injectable()
 export class DispatchTicketService {
   DispatchTicketChanged = new Subject<DispatchTicket[]>();
+  SingleDispatchChanged = new Subject<DispatchTicket>();
 
   private dts: DispatchTicket[] = [
     new DispatchTicket()
   ]
+
+  private dt: DispatchTicket = new DispatchTicket();
 
 
   constructor(
@@ -49,6 +52,14 @@ export class DispatchTicketService {
       });
   }
 
+  setSingleDispatchTicket(dt: DispatchTicket) {
+    this.dt = dt;
+    this.SingleDispatchChanged.next(this.dt);
+  }
+
+  getSingleDispatchTicket() {
+    return this.dt;
+  }
 
   setListDispatchTicket(dts: DispatchTicket[]) {
     this.dts = dts;
@@ -77,7 +88,7 @@ export class DispatchTicketService {
         return Observable.throw(error);
       });
   }
-  
+
   updateDispatchTicket(dt: DispatchTicket): Observable<DispatchTicket> {
     return this.http.post(this.appConfig.getApiEndPoint('manage-dt/update'), dt)
       .catch(
@@ -94,8 +105,49 @@ export class DispatchTicketService {
       });
   }
 
-  getTechnicianTicketsByAtms(atmIDs:string[]): Observable<TechnicianTicket[]> {
-    return this.http.post(this.appConfig.getApiEndPoint('manage-tt/tt-list-by-atms'),{selectedAtmIDs: atmIDs})
+  doClosedDispatchTicket(closedItem: any): Observable<DispatchTicket> {
+    return this.http.post(this.appConfig.getApiEndPoint('manage-dt/do-closed'), closedItem)
+      .catch(
+      (error: Response) => {
+        return Observable.throw(error);
+      });
+  }
+
+  doClosedTechicianTicket(ttItem: any): Observable<DispatchTicket> {
+    return this.http.post(this.appConfig.getApiEndPoint('manage-dt/do-tt-solution'), ttItem)
+      .catch(
+      (error: Response) => {
+        return Observable.throw(error);
+      });
+  }
+
+
+  doRecievedDispatchTicket(recieveditem: any): Observable<DispatchTicket> {
+    return this.http.post(this.appConfig.getApiEndPoint('manage-dt/do-recieved'), recieveditem)
+      .catch(
+      (error: Response) => {
+        return Observable.throw(error);
+      });
+  }
+
+  doUpdateBalanceDispatchTicket(updateData: any): Observable<DispatchTicket> {
+    return this.http.post(this.appConfig.getApiEndPoint('manage-dt/do-updated-atm-balance'), updateData)
+      .catch(
+      (error: Response) => {
+        return Observable.throw(error);
+      });
+  }
+
+  doMarkCompletedDispatchTicket(competedData: any): Observable<DispatchTicket> {
+    return this.http.post(this.appConfig.getApiEndPoint('manage-dt/do-mark-completed'), competedData)
+      .catch(
+      (error: Response) => {
+        return Observable.throw(error);
+      });
+  }
+
+  getTechnicianTicketsByAtms(atmIDs: string[]): Observable<TechnicianTicket[]> {
+    return this.http.post(this.appConfig.getApiEndPoint('manage-tt/tt-list-by-atms'), { selectedAtmIDs: atmIDs })
       .map((response) => {
         return response['data'];
       })
@@ -116,10 +168,10 @@ export class DispatchTicketService {
       });
   }
 
-  getAtmsByBalanceFilter(b: string,eid: string): Observable<Atm[]> {
-    let editId = eid ? "&eid="+eid : "";
-    let bLimit = b ? b:"0";
-    return this.http.get(this.appConfig.getApiEndPoint('manage-dt/atms-by-balance-not-yet-dispatch?b='+bLimit + editId))
+  getAtmsByBalanceFilter(b: string, eid: string): Observable<Atm[]> {
+    let editId = eid ? "&eid=" + eid : "";
+    let bLimit = b ? b : "0";
+    return this.http.get(this.appConfig.getApiEndPoint('manage-dt/atms-by-balance-not-yet-dispatch?b=' + bLimit + editId))
       .map((response) => {
         return response['data'];
       })

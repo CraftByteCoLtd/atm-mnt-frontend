@@ -1,5 +1,5 @@
 <ng-template #popContent>
-<div class="pull-right ">
+<div class="update-balance-box pull-right">
 	<label for="txtRemaining">
 		Current Balance :
 	</label>
@@ -8,23 +8,32 @@
 	<p for="txtRemaining" class="pull-left">
 		New Balance :
 	</p>
-	<input class="form-control " name="txtRemaining" type="number"  [(ngModel)] ="txtUpdateBalance">
-	<button class="btn btn-primary" (click)="updateTreasuryBalance();p.close()" type="submit">Update</button>
-	<button class="btn btn-danger" (click)="p.close()">Cancel</button>
+	<input class="form-control " name="txtRemaining" type="number"  [(ngModel)] ="txtUpdateBalance"><br>
+	<div class="btn-group" role="group">
+	<button class="btn btn-primary btn-sm" (click)="updateTreasuryBalance();p.close()" type="submit">Save</button>
+	<button class="btn btn-danger btn-sm" (click)="p.close()">Cancel</button>
+	</div>
 </div>
 </ng-template>
 
 <ng-template #popLogContent>
 <ul class="list-group">
- <li class="list-group-item" *ngFor="let tl of trsLogs ">
+ <li class="list-group-item log-item-box" *ngFor="let tl of trsLogs ">
   <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
-  <small>{{ tl.updated | date:'medium' }}</small>
-  <h5 class="log-text">{{tl?.oldBalance | currency:'USD':true}}</h5>
-  <h5 class="log-text"><i class="fa fa-arrow-down" aria-hidden="true"></i></h5>
-  <h5 class="log-text">{{tl?.newBalance | currency:'USD':true}}</h5>
-  <i class="fa fa-user-plus-o" aria-hidden="true"></i>
-  <small>by: {{ tl.updatedBy}}</small>
+  <small>{{ tl.updated | date:'medium' }}</small><br>
+  <span class="log-text">{{tl?.oldBalance | currency:'USD':true}}</span>
+  <span class="log-text"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+  <span class="log-text log-new-balance">{{tl?.newBalance | currency:'USD':true}}</span>
+  <i class="fa fa-user-plus-o" aria-hidden="true"></i><br>
+  <span><i class="fa fa-user-o" aria-hidden="true"></i>: {{ tl.updatedBy}}</span><br>
+  <span class="log-text">Note : {{ tl.logType}}.</span>
  </li>
+ <li class="list-group-item log-item-box">
+ <button class="btn btn-danger btn-sm" (click)="pl.close()">
+ 	Close
+ </button>
+ <small class="text-muted">*Only the 10 latest records.</small>
+</li>
 </ul>
 
 </ng-template>
@@ -34,21 +43,27 @@
 			<h4>
 			<i _ngcontent-c1="" aria-hidden="true" class="fa fa-money"></i>
 			Managed Dispatch Ticket by Treasury</h4>
+			          
 			<div class="balance-box">
 				<span class="pull-right badge bedge-pill badge-secondary">Remaining</span>
 				<h3 class="pull-right">{{trs?.treasuryBalance | currency:'USD':true}}</h3><br>
-				<div class="btn-group" role="group" aria-label="Basic example">
-
+				<div class="btn-group" role="group">
+<!-- mouseenter:mouseleave -->
 					<button 
-					placement="bottom" triggers="mouseenter:mouseleave"
-					[ngbPopover]="popLogContent" container="body"  #pl="ngbPopover" popoverTitle="Latest 10 updated log"
-					type="button" class="btn btn-light"><i class="fa fa-history" aria-hidden="true"></i> Latest 10 records Logs</button>
+					placement="bottom" triggers="click:click"
+					[ngbPopover]="popLogContent" container="body"  #pl="ngbPopover" popoverTitle="Changed logs:"
+					type="button" class="btn btn-light"><i class="fa fa-history" aria-hidden="true"></i> Latest updated log</button>
 
 					<button type="button" class="btn btn-primary pull-right"
 					placement="bottom" container="body"
 					[ngbPopover]="popContent"  #p="ngbPopover" popoverTitle="Update Treasury Balance">
 					Update Treasury
-					</button>  
+					</button> 
+
+					<button disabled 
+          class="btn btn-outline-info pull-right"  >Export CSV</button> 
+
+
 				</div>
 			</div>
 		</nav>

@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-block">
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="this.currentUser.authRules.isAdmin === true">
           <button class="btn btn-success pull-right" (click)="onAddAtm()">New machine</button>
         </div>
         <h4 class="card-title"><i class="fa fa-atm" aria-hidden="true"></i>Manage ATM Machine</h4>

@@ -1,0 +1,102 @@
+<div class="row atm-item">
+	<div class="col">
+    <small><strong>Atm Machine ID</strong></small>
+	{{at.atm.atmMachineID}}
+<br>
+	<small><strong>Atm Status</strong></small>
+		<span class="badge badge-pill" ngClass="{{at.atm.atmStatus}}">
+			{{at.atm.atmStatus}}
+    	</span>
+	</div>
+	<div class="col">
+	<strong>Dispatch Detail</strong><br>
+    	 <small><strong>Expected Remaining:</strong> :{{at.remainingBefore | currency:'USD':true}} </small><br>
+    	 <small><strong>Actual Remaining:</strong> :{{at.actualRemaining | currency:'USD':true}} </small><br>
+    	 <small><strong>Deposit</strong> :{{at.deposit | currency:'USD':true}} </small><br>
+		 <small><strong>Bad Bill:</strong> :{{at.badBill | currency:'USD':true}} </small><br>
+		 <small><strong>Balance:</strong> :{{(at.actualRemaining -at.badBill)+at.deposit | currency:'USD':true}} </small><br>
+
+    </div>
+	<div class="col">
+		<button [disabled]="dt?.dtStatus !== 'recieved'" 
+		class="btn btn-sm btn-outline-primary pull-right" (click)="open(content)">Deposit <i class="fa fa-inbox" aria-hidden="true"></i></button>
+				<small><strong>Deposit status</strong></small>
+		<span class="badge badge-pill" ngClass="{{at.dtAtmStatus}}">
+   			{{at.dtAtmStatus}}
+    	</span><br>
+
+	</div>
+</div>
+<ng-template #content let-c="close" let-d="dismiss" >
+<div class="modal-header">
+	<h4 class="modal-title">Update balance to  : </h4>
+	<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+	<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<div>
+		<table class="table table-stripped">
+			<thead>
+				<tr>
+					<td colspan="2">
+					<div class="pull-left">
+						<h4>{{at.atm.atmMachineID}}</h4>
+					</div>
+						<div class="pull-right">
+							<span class="badge badge-pill {{ at.atm.atmStatus}}">
+								ATM status : {{ at.atm.atmStatus}}
+							</span>	<p>Deposit By : {{currentUser.fullName}}</p>
+							</div>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">Expected Remaining</th>
+						<td>
+							<input class="form-control" disabled 
+							name="txtRemaining" type="number" [(ngModel)]="txtRemaining">
+
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">Actual Remaining</th>
+						<td>
+							<input class="form-control"  (change)="calTotal()"
+							name="txtActual" type="number" [(ngModel)]="txtActual">
+
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">Deposit</th>
+						<td>
+							<input class="form-control" (change)="calTotal()"
+							name="txtDeposit" type="number" [(ngModel)]="txtDeposit">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">Bad Bills</th>
+						<td>
+							<input class="form-control"(change)="calTotal()"
+							 name="txtBadBill" type="number" [(ngModel)]="txtBadBill">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">Total Deposit</th>
+						<td>
+							<input class="form-control" disabled
+							 name="txtTotal" type="number" [(ngModel)]="txtTotal">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<div class="btn-group" role="group">
+			<button class="btn btn-primary" (click)="onDeposit()" type="submit">Save</button>
+			<button class="btn btn-danger" (click)="c('Close click')">Cancel</button>
+		</div>
+	</div>
+	</ng-template>

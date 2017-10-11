@@ -16,6 +16,7 @@ interface AtmLocation {
 interface DtAtm{
   atm: Atm;
   remainingBefore: number;
+  actualRemaining:number;
   deposit: number;
   badBill: number;
   dtAtmStatus: string;

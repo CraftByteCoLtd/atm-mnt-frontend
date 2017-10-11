@@ -66,6 +66,8 @@ import { TreasuryComponent } from './cmp-treasury/treasury.component';
 import { TreasuryListComponent } from './cmp-treasury/treasury-list/treasury-list.component';
 import { TreasuryItemComponent } from './cmp-treasury/treasury-item/treasury-item.component';
 import { TreasuryWithdrawComponent } from './cmp-treasury/treasury-withdraw/treasury-withdraw.component';
+import { DispatchDepositItemComponent } from './cmp-dispatch-ticket/dispatch-deposit-item/dispatch-deposit-item.component';
+import { AtmStartPageComponent } from './cmp-atm/atm-start-page/atm-start-page.component';
 
 
 export function jwtOptionsFactory() {
@@ -123,7 +125,9 @@ export function jwtOptionsFactory() {
     TreasuryComponent,
     TreasuryListComponent,
     TreasuryItemComponent,
-    TreasuryWithdrawComponent
+    TreasuryWithdrawComponent,
+    DispatchDepositItemComponent,
+    AtmStartPageComponent
   ],
   imports: [
     BrowserModule,

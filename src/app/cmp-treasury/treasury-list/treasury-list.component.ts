@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class TreasuryListComponent implements OnInit {
   dts: DispatchTicket[] = [];
-  trsLogs: any =[];
+  trsLogs: any = [];
   dtsSubscription: Subscription;
   subjectSubscription: Subscription;
   currentUser: any;
@@ -34,65 +34,64 @@ export class TreasuryListComponent implements OnInit {
     private router: Router,
     private currentUserService: CurrentUserService,
     private treasuryService: TreasuryService
-  	) { }
+  ) { }
 
- ngOnInit() {
+  ngOnInit() {
     this.dtsSubscription = this.dtService.getActiveDispatchTickets()
-     .subscribe(
-       (dts: DispatchTicket[]) => {
-         this.dts = dts;
-         this.dtService.setListDispatchTicket(dts);
-       }
-     );
-
-     this.dtsSubscription = this.dtService.DispatchTicketChanged
       .subscribe(
-        (dts: DispatchTicket[]) => {
-          this.dts = dts;
-             this.loadTreasuryInfo();
-        }
+      (dts: DispatchTicket[]) => {
+        this.dts = dts;
+        this.dtService.setListDispatchTicket(dts);
+      }
       );
 
-     this.dts = this.dtService.getListDispatchTicket();
-     this.currentUser = this.currentUserService.getCurrentUserInfo();
-     this.loadTreasuryLog();
-  
+    this.dtsSubscription = this.dtService.DispatchTicketChanged
+      .subscribe(
+      (dts: DispatchTicket[]) => {
+        this.dts = dts;
+        this.loadTreasuryInfo();
+        this.loadTreasuryLog();
+      }
+      );
+
+    this.dts = this.dtService.getListDispatchTicket();
+    this.currentUser = this.currentUserService.getCurrentUserInfo();
+    this.loadTreasuryLog();
+
 
   }
-  updateTreasuryBalance(){
-   let cfResult  = confirm('Confirm to update Treasury balance to (' + this.txtUpdateBalance + ')?');
-   if (cfResult === false) return;
-   let newTrs:Treasury = new Treasury();
-   newTrs = this.trs;
-   newTrs.treasuryBalance = this.txtUpdateBalance;
+  updateTreasuryBalance() {
+    let cfResult = confirm('Confirm to update Treasury balance to (' + this.txtUpdateBalance + ')?');
+    if (cfResult === false) return;
+
+    let newTrs: Treasury = new Treasury();
+    newTrs = this.trs;
+    newTrs.treasuryBalance = this.txtUpdateBalance;
 
 
-   this.trsSubscription = this.treasuryService.updateTreasuryBalance(newTrs, this.currentUser)
-            .subscribe(data=> {
-              this.loadTreasuryInfo();      
-              this.loadTreasuryLog();     
-            });
+    this.trsSubscription = this.treasuryService.updateTreasuryBalance(newTrs, this.currentUser.fullName)
+      .subscribe(data => {
+        this.loadTreasuryInfo();
+        this.loadTreasuryLog();
+      });
   }
-  loadTreasuryLog(){
-    // getTreasuryLatestLog
-          this.trsSubscription = this.treasuryService.getTreasuryLatestLog()
-        .subscribe(
-          (tsrLog: any[]) =>{
-            this.trsLogs = tsrLog;
-            console.log(this.trsLogs);
-          }
-        );
+  loadTreasuryLog() {
+    this.trsSubscription = this.treasuryService.getTreasuryLatestLog()
+      .subscribe(
+      (tsrLog: any[]) => {
+        this.trsLogs = tsrLog;
+      }
+      );
   }
 
 
-  loadTreasuryInfo(){
-      this.trsSubscription = this.treasuryService.getTreasuryInfo()
-        .subscribe(
-          (trs: Treasury[]) =>{
-            this.trs = trs[0];
-            console.log(trs);
-          }
-        );
+  loadTreasuryInfo() {
+    this.trsSubscription = this.treasuryService.getTreasuryInfo()
+      .subscribe(
+      (trs: Treasury[]) => {
+        this.trs = trs[0];
+      }
+      );
   }
 
 }

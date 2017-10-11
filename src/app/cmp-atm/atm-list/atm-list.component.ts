@@ -4,7 +4,7 @@ import { AuthenticationService } from '../../_services/authentication.service';
 import { AtmService } from '../../_services/atm.service';
 import { AppConfigService } from '../../_services/app-config.service';
 
-
+import { CurrentUserService } from '../../_services/current-user.service';
 import { Atm } from '../../_models/atm.model';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -17,12 +17,15 @@ export class AtmListComponent implements OnInit {
   atms: Atm[];
   atmsSubscription: Subscription;
   subjectSubscription: Subscription;
+  currentUser: any;
 
   constructor(
     private authenticationService: AuthenticationService,
     private atmService: AtmService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private currentUserService: CurrentUserService,
+
   ) { }
 
   ngOnInit() {
@@ -42,6 +45,8 @@ export class AtmListComponent implements OnInit {
       );
 
      this.atms = this.atmService.getListAtm();
+     this.currentUser = this.currentUserService.getCurrentUserInfo();
+
   }
   ngOnDestroy(){
     this.atmsSubscription.unsubscribe();

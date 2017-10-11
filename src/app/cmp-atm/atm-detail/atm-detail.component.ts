@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../_services/authentication.service';
 import { Subscription } from 'rxjs/Subscription';
 
 import { AppConfigService } from '../../_services/app-config.service';
+import { CurrentUserService } from '../../_services/current-user.service';
 
 import { AtmService } from '../../_services/atm.service';
 import { Atm } from '../../_models/atm.model';
@@ -20,12 +21,14 @@ export class AtmDetailComponent implements OnInit , OnDestroy{
   atmsSubscription: Subscription;
   subjectSubscription: Subscription;
   draggedCoord: any;
+  currentUser: any;
 
   constructor(
     private authenticationService: AuthenticationService,
     private atmService: AtmService,
     private route: ActivatedRoute,
     private router: Router,
+    private currentUserService: CurrentUserService,
 
   ) { }
 
@@ -41,6 +44,9 @@ export class AtmDetailComponent implements OnInit , OnDestroy{
           },
           error => console.log(error));
       });
+
+    this.currentUser = this.currentUserService.getCurrentUserInfo();
+
   }
 
   onGetDraggedLocation(coord: any) {

@@ -17,6 +17,7 @@ import { AtmComponent } from './cmp-atm/atm.component';
 import { AtmEditComponent } from './cmp-atm/atm-edit/atm-edit.component';
 import { AtmListComponent } from './cmp-atm/atm-list/atm-list.component';
 import { AtmDetailComponent } from './cmp-atm/atm-detail/atm-detail.component';
+import { AtmStartPageComponent } from './cmp-atm/atm-start-page/atm-start-page.component';
 import { DispatchTicketComponent } from './cmp-dispatch-ticket/dispatch-ticket.component';
 import { DispatchTicketDetailComponent } from './cmp-dispatch-ticket/dispatch-ticket-detail/dispatch-ticket-detail.component';
 import { DispatchTicketEditComponent } from './cmp-dispatch-ticket/dispatch-ticket-edit/dispatch-ticket-edit.component';
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
 		{ path: ':id/edit', component: UserEditComponent }
 	],canActivate: [AuthGuard]  },
 	{ path: 'atm', component: AtmComponent, children:[
+		{ path: 'start',component: AtmStartPageComponent},
 		{ path: 'new', component: AtmEditComponent },
 		{ path: ':id', component: AtmDetailComponent },
 		{ path: ':id/edit', component: AtmEditComponent }

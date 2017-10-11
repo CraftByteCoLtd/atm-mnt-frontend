@@ -15,7 +15,7 @@
             <a class="nav-link dropdown-toggle" ngbDropdownToggle>ATM Machine</a>
             <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="techician-ticket-dropdown">
               <a
-               [routerLink]="['vaulter']"
+               [routerLink]="['atm','start']"
                class="dropdown-item" >
                 <i class="fa fa-ticket" aria-hidden="true"></i>
                 View Machine Detail</a>
@@ -23,7 +23,7 @@
          </li>
 
          <li
-         *ngIf="isDispatcherManager"
+         *ngIf="isDispatcherManager||isAtmVaulter"
          class="nav-item dropdown" ngbDropdown>
             <a class="nav-link dropdown-toggle"
               ngbDropdownToggle>Dispatch Ticket</a>

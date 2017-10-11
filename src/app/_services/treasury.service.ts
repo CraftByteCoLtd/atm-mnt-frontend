@@ -42,10 +42,11 @@ export class TreasuryService {
       });
   }
 
-  updateTreasuryBalance(trs: any, currentUser:any): Observable<any> {
+  updateTreasuryBalance(trs: any, fullName:string): Observable<any> {
     let trsUpdate:any = {
       treasuryBalance: trs.treasuryBalance,
-      updatedBy: currentUser.fullName
+      logType: 'update treasury',
+      updatedBy: fullName
     }
 
     return this.http.post(this.appConfig.getApiEndPoint('manage-treasury/update'), trsUpdate)

@@ -39,6 +39,7 @@ export class DispatchMapWithMarkersComponent implements OnInit {
           {
             name: atm.atm.atmMachineID,
             balance: +atm.remainingBefore,
+            actualBalance: +atm.actualRemaining,
             desc: atm,
             lat: +atm.atm.atmLocation.lat,
             lng: +atm.atm.atmLocation.lng,
@@ -53,6 +54,7 @@ export class DispatchMapWithMarkersComponent implements OnInit {
 interface marker {
   name?: string,
   balance?: number,
+  actualBalance?: number,
   desc: DtAtm,
   lat: number,
   lng: number,
@@ -62,6 +64,7 @@ interface marker {
 interface DtAtm{
   atm:Atm;
   remainingBefore: number;
+  actualRemaining:number;
   deposit: number;
   badBill: number;
   dtAtmStatus: string;

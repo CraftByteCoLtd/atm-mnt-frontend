@@ -1,0 +1,29 @@
+.atm-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.online{
+  background: green;
+}
+
+.offline{
+  background: red;
+}
+
+
+.open{
+	background:#009688;
+}
+
+.closed{
+	background:#ccc;
+}
+.atm-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+strong{
+	color:#5380a5;
+}

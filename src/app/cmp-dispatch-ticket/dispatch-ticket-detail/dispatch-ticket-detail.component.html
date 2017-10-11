@@ -1,140 +1,150 @@
 <div class="card">
   <h3><i class="fa fa-credit-card" aria-hidden="true"></i>
-     Dispatch Ticket Detail</h3>
+  Dispatch Ticket Detail</h3>
   <nav class="navbar bg-light-blue">
-  <div class="btn-group" role="group">
-    <button *ngIf="this.currentUser.authRules.isDispatcherManager === true && dt.dtStatus === 'open'" class="btn btn-primary" (click)="onEdit()">Edit Dispatch ticket</button>
-  </div>
-  <div class="btn-group" role="group">
-  <button 
-    ngbTooltip="Change the status from (withdraw) to (recieved) by Vaulter " triggers="mouseenter:mouseleave" popoverTitle="Recieved" container="body"
-     *ngIf="this.currentUser.authRules.isAtmVaulter === true
-     && dt.dtStatus === 'withdraw'" 
-     class="btn btn-warning" (click)="onReveived()">Recieved Money</button>
-</div>
-  </nav>
-  <div class="card-body">
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">
-      <h4>Dispatch Ticket ID : {{ dt.dtID }}</h4>
-      <small>Dispatch Ticket status : </small><span class="badge badge-pill" ngClass="{{dt.dtStatus}}">
-    {{ dt.dtStatus }}
-    </span>
-    <div class="pull-right">
-      <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-      <small class="text-muted">updated: {{dt.updated |  date:'medium' }}</small><br>
-      <i class="fa fa-calendar" aria-hidden="true"></i>
-      <small class="text-muted">created: {{dt.created | date:'medium' }}</small>
+    <div class="btn-group" role="group">
+      <button *ngIf="this.currentUser.authRules.isDispatcherManager === true && dt.dtStatus === 'open'" class="btn btn-primary" (click)="onEdit()">Edit Dispatch ticket</button>
     </div>
-    </li>
-    <li class="list-group-item">
-      <h4>Responsible Person</h4>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Vaulter Name</th>
-            <th>
-              <span class="pull-right">Phones</span>
+    <div class="btn-group" role="group">
+      <button
+      ngbTooltip="Mark as Completed task for {{ dt.dtID }}" triggers="mouseenter:mouseleave" popoverTitle="Recieved" container="body"
+      *ngIf="this.currentUser.authRules.isAtmVaulter === true && dt.dtStatus === 'recieved' && isCompleted ===true"
+      class="btn btn-completed"  (click)="onCompleted()"><i class="fa fa-check" aria-hidden="true"></i>Mark Completed All Deposit</button>
+      <button
+      ngbTooltip="Change the status from (withdraw) to (recieved) by Vaulter " triggers="mouseenter:mouseleave" popoverTitle="Recieved" container="body"
+      *ngIf="this.currentUser.authRules.isAtmVaulter === true && dt.dtStatus === 'withdraw'"
+      class="btn btn-recieved" (click)="onRecieved()"><i class="fa fa-usd" aria-hidden="true"></i> Recieved Money</button>
+    </div>
 
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let rp of dt.dtResponsiblePersons; let i = index;">
-            <td>{{i+1}}</td>
-            <td>{{rp.fullName}}</td>
-            <td>
-              <div class="pull-right">
-                <a class="caption" *ngFor="let p of rp.userPhones" href="tel:{{p.number}}"><i class="fa fa-phone" aria-hidden="true"></i> {{ p.desc }}:{{p.number}}</a>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
-    <li class="list-group-item">
-      <h4 class=""> Services ATM Machine</h4>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Atm Machine ID</th>
-            <th>Remaining Balance</th>
-            <th>Atm Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let at of dt.dtAtms;let i = index;">
-            <td>{{i+1}}</td>
-            <td>{{at.atm.atmMachineID}}</td>
-            <td>{{at.atm.atmBalance | currency:'USD':true}}</td>
-            <td>{{at.atm.atmStatus}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-md-12">
-          <app-dispatch-map-with-markers
-           [atms]="dt.dtAtms" >
-          </app-dispatch-map-with-markers>
+
+  </nav>
+ <nav class="breadcrumb pull-left">
+  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'open'}">Open</a>
+  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'withdraw'}">Withdraw</a>
+  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'recived'}">Recieved</a>
+  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'completed'}">Completed</a>
+  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'closed'}">Closed</a>
+</nav>
+  <div class="card-body">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <h4>Dispatch Ticket ID : {{ dt.dtID }}</h4>
+        <div class="pull-left">
+        <small>Dispatch Ticket status : </small><span class="badge badge-pill" ngClass="{{dt.dtStatus}}">
+          {{ dt.dtStatus }}
+        </span><br>
+        <strong>Withdraw Amount : <h5>{{ dt.dtWithdrawBalance | currency:'USD':true}}</h5></strong>
         </div>
-
-      </div>
-
-    </li>
-    <li class="list-group-item">
-      <h4> TechnicianTicket </h4>
-      <span *ngIf="!dt.dtTechnicianTickets?.length">- no technician ticket for this Dispatch Ticket. -</span>
-
-      <div class="row">
-        <div class="col-md-12">
-        <div class="card-deck">
-          <div class="card" *ngFor="let tt of dt.dtTechnicianTickets">
-            <div class="card-title">
-              <h5 class="card-title">#{{tt.tTicketID}}</h5>
-            </div>
-            <div class="card-body">
-              <span class="badge badge-pill" ngClass="{{tt.tTicketStatus}}">
-            {{ tt.tTicketStatus }}
-            </span>
-              <strong>Symptom:</strong>
-              <p class="card-text">
-                {{ tt.tTicketSymptom }}
-              </p>
-              <strong>Solution:</strong>
-              <p class="card-text">
-                {{ tt.tTicketSolution }}
-              </p>
-              <strong>Atm Machine:</strong>
-              <p class="card-text">
-                {{ tt.atmMachineID }}
-              </p>
-              <strong>Responsible Person:</strong>
-              <p class="card-text">
-                {{ tt.tTicketResponsiblePerson?.fullName }}
-              </p>
-
-            </div>
-            <div class="card-footer">
-              <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-              <small class="text-muted">updated: {{tt.updated |  date:'medium' }}</small><br>
-              <i class="fa fa-calendar" aria-hidden="true"></i>
-              <small class="text-muted">created: {{tt.tTicketCreated | date:'medium' }}</small>
-            </div>
-
+        <div class="pull-right">
+          <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+          <small class="text-muted">updated: {{dt.updated |  date:'medium' }}</small><br>
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          <small class="text-muted">created: {{dt.created | date:'medium' }}</small>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <h4>Responsible Person</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Vaulter Name</th>
+              <th>
+                <span class="pull-right">Phones</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rp of dt.dtResponsiblePersons; let i = index;">
+              <td>{{i+1}}</td>
+              <td>{{rp.fullName}}</td>
+              <td>
+                <div class="pull-right">
+                  <a class="caption" *ngFor="let p of rp.userPhones" href="tel:{{p.number}}"><i class="fa fa-phone" aria-hidden="true"></i> {{ p.desc }}:{{p.number}}</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li class="list-group-item">
+        <h4 class=""> <strong>Services ATM Machine</strong></h4>
+        <app-dispatch-deposit-item
+          *ngFor="let at of dt.dtAtms;"
+          [at]="at" [dtId]="dt._id" [currentUser]="currentUser" [dt]="dt"
+          >
+          
+        </app-dispatch-deposit-item>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-12">
+            <app-dispatch-map-with-markers
+              [atms]="dt.dtAtms" >
+            </app-dispatch-map-with-markers>
           </div>
         </div>
+      </li>
+      <li class="list-group-item">
+        <h4> TechnicianTicket </h4>
+        <span *ngIf="!dt.dtTechnicianTickets?.length">- no technician ticket for this Dispatch Ticket. -</span>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-deck">
+              <div class="card" *ngFor="let tt of dt.dtTechnicianTickets">
+                <div class="card-title">
+                  <h5 class="card-title">#{{tt.tTicketID}}</h5>
+                </div>
+                <div class="card-body">
+                  <span class="badge badge-pill" ngClass="{{tt.tTicketStatus}}">
+                    {{ tt.tTicketStatus }}
+                  </span>
+                  <strong>Symptom:</strong>
+                  <p class="card-text">
+                    {{ tt.tTicketSymptom }}
+                  </p>
+                  <strong>Solution:</strong>
+                  <p class="card-text">
+                    {{ tt.tTicketSolution }}
+                  </p>
+                  <strong>Atm Machine:</strong>
+                  <p class="card-text">
+                    {{ tt.atmMachineID }}
+                  </p>
+                  <strong>Responsible Person:</strong>
+                  <p class="card-text">
+                    {{ tt.tTicketResponsiblePerson?.fullName }}
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                  <small class="text-muted">updated: {{tt.updated |  date:'medium' }}</small><br>
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                  <small class="text-muted">created: {{tt.tTicketCreated | date:'medium' }}</small>
+                  <div *ngIf="tt.tTicketStatus==='open'">
+                    <strong>Closed Ticket : </strong>
+                    <form
+                      #tf="ngForm" (ngSubmit)="onTtCompleted(tf,tt)" novalidate>
+                      <div class="form-group">
+                        <label for="txtResolution">Solution Note: </label>
+                       <!--  <input ngModel required #txtResolution name="txtResolution"
+                        type="text" class="form-control col-sm" id="txtResolution" placeholder="Please enter text"> -->
+
+                        <textarea rows="4" cols="50"
+                        ngModel required #txtResolution name="txtResolution" id="txtResolution" class="form-control col-sm">
+                        </textarea>
+                      </div>
+                      <button [disabled]="!tf.valid"
+                      class="btn btn-danger" type="submit">Resolution</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-      </div>
-    </li>
-
-    <li class="list-group-item">
-
-    </li>
-
-  </ul>
-</div>
+      </li>
+      <li class="list-group-item">
+      </li>
+    </ul>
+  </div>

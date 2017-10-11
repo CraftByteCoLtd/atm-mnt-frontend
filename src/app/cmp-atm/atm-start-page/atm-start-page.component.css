@@ -1,0 +1,33 @@
+agm-map {
+  height: 600px;
+  min-width: 200px;
+  max-height: 600px;
+}
+.online{
+  background-color: green;
+}
+
+.offline{
+  background-color: red;
+}
+
+.btn{
+  margin-left:5px;
+  margin-bottom: 5px;
+}
+
+.card{
+  margin-top:15px;
+  padding:5px;
+
+}
+
+label{
+  font-weight: bold;
+  color:#007bff;
+}
+
+nav.navbar.bg-light-blue {
+    background-color: #f4f0f0;
+    border-radius: 5px;
+}

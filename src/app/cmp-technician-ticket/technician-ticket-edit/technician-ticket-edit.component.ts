@@ -171,7 +171,7 @@ export class TechnicianTicketEditComponent implements OnInit {
 
     this.ttForm = new FormGroup({
       tTicketSymptom: new FormControl( editTtiketSymptom , Validators.required),
-      tTicketSolution: new FormControl( editTticketSolution, Validators.required),
+      tTicketSolution: new FormControl( editTticketSolution),
       tTicketStatus: new FormControl( editTticketStatus, Validators.required),
       tTicketID: new FormControl(editTticketID),
       tTicketCreated: new FormControl(editTticketCreated)
