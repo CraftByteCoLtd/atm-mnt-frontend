@@ -7,6 +7,8 @@ import * as _ from "lodash";
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {DataTableModule } from 'angular-4-data-table-bootstrap-4';
+
 
 import { JwtModule,JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
@@ -68,6 +70,7 @@ import { TreasuryItemComponent } from './cmp-treasury/treasury-item/treasury-ite
 import { TreasuryWithdrawComponent } from './cmp-treasury/treasury-withdraw/treasury-withdraw.component';
 import { DispatchDepositItemComponent } from './cmp-dispatch-ticket/dispatch-deposit-item/dispatch-deposit-item.component';
 import { AtmStartPageComponent } from './cmp-atm/atm-start-page/atm-start-page.component';
+import { UploadCsvComponent } from './cmp-upload-csv/upload-csv.component';
 
 
 export function jwtOptionsFactory() {
@@ -127,7 +130,9 @@ export function jwtOptionsFactory() {
     TreasuryItemComponent,
     TreasuryWithdrawComponent,
     DispatchDepositItemComponent,
-    AtmStartPageComponent
+    AtmStartPageComponent,
+    UploadCsvComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -135,6 +140,7 @@ export function jwtOptionsFactory() {
     ReactiveFormsModule,
     HttpModule,
     NgxDatatableModule,
+    DataTableModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBn9SD4FNh0lXNepclv6968CmXrow_hF1s'
     }),

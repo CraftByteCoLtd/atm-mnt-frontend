@@ -45,14 +45,18 @@
 			Managed Dispatch Ticket by Treasury</h4>
 			          
 			<div class="balance-box">
+
 				<span class="pull-right badge bedge-pill badge-secondary">Remaining</span>
 				<h3 class="pull-right">{{trs?.treasuryBalance | currency:'USD':true}}</h3><br>
 				<div class="btn-group" role="group">
-<!-- mouseenter:mouseleave -->
 					<button 
 					placement="bottom" triggers="click:click"
 					[ngbPopover]="popLogContent" container="body"  #pl="ngbPopover" popoverTitle="Changed logs:"
 					type="button" class="btn btn-light"><i class="fa fa-history" aria-hidden="true"></i> Latest updated log</button>
+					<button type="button" class="btn btn-success"
+					placement="bottom"Title="Update ATM Balance by CSV" (click)="uploadCsv()">
+					Update ATM Balance by CSV
+					</button> 
 
 					<button type="button" class="btn btn-primary pull-right"
 					placement="bottom" container="body"

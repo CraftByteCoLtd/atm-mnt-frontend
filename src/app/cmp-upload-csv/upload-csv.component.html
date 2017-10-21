@@ -1,0 +1,176 @@
+<div class="card">
+	<div class="card-header">
+		<div class="title-box pull-left">
+				<h4 class="card-title">CSV file upload</h4>
+			<button type="button"
+				 class="btn btn-success btn-sm pull-left" 
+				(click)="goToTreasury()"> 
+				<i class="fa fa-external-link" aria-hidden="true"></i>
+				 Manage Treasury
+			</button>
+		</div>
+	
+			<div class="instruction-box pull-right">
+				<strong>
+		Note: 
+		</strong> 
+		<small class="form-text text-muted">
+		 Required Fields:<br>
+		 - DispensedAmount,Date(format : MM/DD/YYYY), TerminalID as ATM ID and etc.. <br>
+		 - To export do "File > Download as > Comma-separated values (.csv,current scheet)" <br>
+		 - <a target="_blank" href="https://docs.google.com/spreadsheets/d/13adiYIP4dz2LpmqMMGRa36kQrmR4e6mrG4SWRf8NdUo/edit?usp=sharing"> <i class="fa fa-external-link" aria-hidden="true"></i>csv file template</a>
+		</small>
+		</div>
+	</div>
+	<div class="card-body">
+		
+		<div>	
+
+		<button type="button" 
+			[disabled] = "!isUploadDone"
+			class="btn btn-danger btn-lg pull-left" 
+			(click)="cancelUpload()">
+			<i class="fa fa-refresh" aria-hidden="true"></i>
+			 Clear 
+			</button>
+		<div class="upload-btn-wrapper ">
+			<input  id="csv" type="file" (change)="selectedFile()" />
+			<button type="button" 
+			[disabled] = "isUploadDone"
+			class="btn btn-success btn-lg pull-left" 
+			(click)="uploadCsv()">
+			<i class="fa fa-upload" aria-hidden="true"></i>
+			1: Upload the file {{ isUploadDone?" (Done)": "" }}
+			</button>
+		</div>	
+	
+	
+
+
+		</div>
+		<br>
+		<small class="font-weight-bold">OriginalFileName:
+			<span class="badge badge-pill badge-light">{{dt?.originalName}}</span>
+		</small>
+
+	</div>
+	<div class="card-footer ">
+		<div class="preview"  *ngIf="dt?.raw.length > 0">
+		 <nav class="navbar bg-light-blue">
+			<div class="btn-group" role="group" >
+				<button type="button" class="btn btn-outline-info btn-sm" 
+				[ngClass]="{active:isSumUpView == true}" 
+				(click)="viewRollup()">View Rollup by ATM</button>
+				<button type="button" class="btn btn-outline-info btn-sm"
+				[ngClass]="{active:isSumUpView == false}"
+				 (click)="viewRaw()">View Raw data </button>
+
+			</div>
+			<button type="button"
+				 [disabled] = "isUpdateDone"
+				 class="btn btn-primary btn-lg" 
+				(click)="doUpdateBalance()"
+				 *ngIf="isSumUpView && dt?.raw.length > 0"> 
+				<i class="fa fa-floppy-o" aria-hidden="true"></i>
+				 2: Update Balance {{ isUpdateDone?"(Done)": "" }}
+			</button>
+		</nav>
+		</div>
+		<div class="preview-content-raw" *ngIf="isSumUpView === false && dt?.raw.length > 0">
+			 <data-table id="raw-grid"
+		        headerTitle="Raw Data Preview"
+		        [items]="rawItems"
+		        [itemCount]="rawItemCount"
+		        (reload)="rawReload($event)"
+		        >
+		        <data-table-column
+		            [property]="'TerminalID'"
+		            [header]="'Terminal ID'"
+		            [sortable]="true"
+		            [resizable]="true">
+		        </data-table-column>
+		        <data-table-column
+		            [property]="'DispensedAmount'"
+		            [header]="'Dispensed Amount'"
+		            [sortable]="true"
+		            [resizable]="true">
+		        </data-table-column>
+		        <data-table-column
+		            [property]="'onDate'"
+		            [header]="'Date'"
+		            [sortable]="true">
+		            <ng-template #dataTableCell let-item="item">
+		                <span>{{item.onDate | date:'MM/dd/yyyy'}}</span>
+		            </ng-template>
+        		</data-table-column>
+		        <data-table-column
+		            [property]="'Declined'"
+		            [header]="'Declined'"
+		            [sortable]="true"
+		             [visible]="false"
+		            [resizable]="true">
+		        </data-table-column>
+		        <data-table-column
+		            [property]="'OtherApproved'"
+		            [header]="'Other Approved'"
+		            [sortable]="true"
+		             [visible]="false"
+		            [resizable]="true">
+		        </data-table-column>
+		        <data-table-column
+		            [property]="'Reversed'"
+		            [header]="'Reversed'"
+		            [sortable]="true"
+		             [visible]="false"
+		            [resizable]="true">
+		        </data-table-column>
+		        <data-table-column
+		            [property]="'SurchargableWithdrawals'"
+		            [header]="'Surchargable Withdrawals'"
+		            [sortable]="true"
+		            [visible]="false"
+		            [resizable]="true">
+		        </data-table-column>
+		        <data-table-column
+		            [property]="'SurchargeCollected'"
+		            [header]="'Surcharge Collected'"
+		            [sortable]="true"
+		            [visible]="false"
+		            [resizable]="true">
+		        </data-table-column>	
+		        <data-table-column
+		            [property]="'TotalTransactions'"
+		            [header]="'Total Transactions'"
+		            [sortable]="true"
+		            [visible]="false"
+		            [resizable]="true">
+		        </data-table-column>		        
+
+		    </data-table>
+		</div>
+		<div class="preview-content-sumup" *ngIf="isSumUpView && dt?.raw.length > 0">	
+ 		    <data-table id="rollup-grid"
+		        headerTitle="Rollup by ATM Preview"
+		        [items]="rollupItems"
+		        [itemCount]="rollupItemCount"
+		        (reload)="rollupReload($event)"
+		        >
+		        <data-table-column
+		            [property]="'TerminalID'"
+		            [header]="'Terminal ID'"
+		            [sortable]="true"
+		            [resizable]="true">
+		        </data-table-column>
+		        <data-table-column
+		            [property]="'TotalDispensed'"
+		            [header]="'Total Dispensed'"
+		            [sortable]="true"
+		            [resizable]="true">
+		        </data-table-column>
+		    </data-table>
+		</div>
+	</div>
+</div>
+
+
+

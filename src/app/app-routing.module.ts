@@ -38,6 +38,7 @@ import { TreasuryComponent } from './cmp-treasury/treasury.component';
 import { TreasuryListComponent } from './cmp-treasury/treasury-list/treasury-list.component';
 import { TreasuryItemComponent } from './cmp-treasury/treasury-item/treasury-item.component';
 import { TreasuryWithdrawComponent } from './cmp-treasury/treasury-withdraw/treasury-withdraw.component';
+import { UploadCsvComponent } from './cmp-upload-csv/upload-csv.component';
 
 
 import { AuthGuard } from './_guards/index';
@@ -81,6 +82,7 @@ const appRoutes: Routes = [
 	{ path: 'treasury', component: TreasuryComponent, children:[
 		{ path: ':id/withdraw', component: TreasuryWithdrawComponent }
 	],canActivate: [AuthGuard] },
+	{ path: 'treasury-upload-csv', component: UploadCsvComponent,canActivate: [AuthGuard] },
 	{ path: 'vaulter', component: VaulterComponent,canActivate: [AuthGuard] },
 	{ path: 'page-not-found', component: PageNotFoundComponent },
 	{ path: '**', redirectTo: '/page-not-found' }

@@ -56,4 +56,28 @@ export class TreasuryService {
       });
   }
 
+
+  uploadCsv(formData: any): Observable<any> {
+    let frmData:any = formData;
+
+    return this.http.post(this.appConfig.getApiEndPoint('manage-upload/upload-file'), frmData)
+      .catch(
+      (error: Response) => {
+        return Observable.throw(error);
+      });
+  }  
+
+  
+    updateAtmBalanceByCsv(id: string): Observable<any> {
+    let item:any = {
+      id: id
+    }
+
+    return this.http.post(this.appConfig.getApiEndPoint('manage-upload/update-balance'), item)
+      .catch(
+      (error: Response) => {
+        return Observable.throw(error);
+      });
+  }
+
 }

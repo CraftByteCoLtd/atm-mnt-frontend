@@ -94,4 +94,8 @@ export class TreasuryListComponent implements OnInit {
       );
   }
 
+  uploadCsv(){
+    this.router.navigate(['/treasury-upload-csv'], { relativeTo: this.route });
+  }
+
 }
