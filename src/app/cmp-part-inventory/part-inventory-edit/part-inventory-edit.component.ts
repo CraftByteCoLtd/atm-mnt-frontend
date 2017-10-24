@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 
-
+import { AlertService } from '../../_services/alert.service';
 import { CurrentUserService } from '../../_services/current-user.service';
 import { PartInventoryService } from '../../_services/part-inventory.service';
 import { Part } from '../../_models/part.model';
@@ -33,6 +33,7 @@ export class PartInventoryEditComponent implements OnInit {
   selectedAtm: Atm;
 
   constructor(
+    private alert: AlertService,
     private currentUserService: CurrentUserService,
     private partService: PartInventoryService,
     private route: ActivatedRoute,
@@ -116,7 +117,6 @@ export class PartInventoryEditComponent implements OnInit {
     this.partsSubscription = this.partService.getPartType()
       .subscribe(response => {
         this.partTypes = response;
-        console.log(this.partTypes);
       },
       error => console.log(error));
   }
@@ -155,7 +155,10 @@ export class PartInventoryEditComponent implements OnInit {
         .subscribe(data => {
           this.msg = data;
           if (data['success'] === true) {
+            this.alertSuccess(data['message']);
             this.refreshData();
+          }else{
+            this.alertError(data['message']);
           }
         });
     } else {
@@ -164,10 +167,20 @@ export class PartInventoryEditComponent implements OnInit {
         .subscribe(data => {
           this.msg = data;
           if (data['success'] === true) {
-          this.refreshData();
+            this.alertSuccess(data['message']);
+            this.refreshData();
+          }else{
+            this.alertError(data['message']);
           }
         });
     }
+  }
+  alertSuccess(msg: string){
+    this.alert.success(msg,true);
+  }
+
+  alertError(msg: string){
+    this.alert.error(msg,true);
   }
   refreshData(){
     this.partsSubscription = this.partService.getParts().subscribe(data =>{

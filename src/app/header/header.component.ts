@@ -10,7 +10,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 
 export class HeaderComponent implements OnInit {
-  isCollapsed = false;
+  isCollapsed = true;
   decodedToken: any;
   isAdmin = false;
   isAtmVaulter = false;

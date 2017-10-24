@@ -5,6 +5,7 @@ import { DataTableResource } from 'angular-4-data-table-bootstrap-4';
 import { TreasuryService } from '../_services/treasury.service';
 import { CurrentUserService } from '../_services/current-user.service';
 import { AuthenticationService } from '../_services/authentication.service';
+import { AlertService } from '../_services/alert.service';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { AuthenticationService } from '../_services/authentication.service';
   templateUrl: './upload-csv.component.html',
   styleUrls: ['./upload-csv.component.css']
 })
+
 export class UploadCsvComponent implements OnInit {
 
   dt: any;
@@ -29,6 +31,7 @@ export class UploadCsvComponent implements OnInit {
   isUploadDone = false;
 
   constructor(
+    private alert: AlertService,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
@@ -51,16 +54,16 @@ export class UploadCsvComponent implements OnInit {
 
       this.treasuryService.uploadCsv(formData).subscribe(
         (msg) => {
-          console.log(msg);
           this.isUploadDone = msg.success;
           if (msg.success === true) {
+            this.alertSuccess(msg['message']);
             this.dt = msg.data;
             this.rollupItemResource = new DataTableResource(msg.data["sumUp"]);
             this.rollupItemResource.count().then(count => this.rollupItemCount = count);
             this.rawItemResource = new DataTableResource(msg.data["raw"]);
             this.rawItemResource.count().then(count => this.rawItemCount = count)
           } else {
-            alert("Error!: Please upload only the csv file.")
+            this.alertError("Error!: Please upload only the csv file.");
           }
         },
         (error) => console.log(error)
@@ -83,34 +86,39 @@ export class UploadCsvComponent implements OnInit {
     this.rawItemResource.query(params).then(items => this.rawItems = items);
   }
 
-  doUpdateBalance(){
+  doUpdateBalance() {
 
     let cfResult = confirm('Confirm to update atm Balance ?');
     if (cfResult === false) return;
 
     const _RECIEVED_STATUS = 'recieved';
-    this.treasuryService.updateAtmBalanceByCsv(this.dt._id).subscribe((msg)=>{
-
-      console.log(msg);
+    this.treasuryService.updateAtmBalanceByCsv(this.dt._id).subscribe((msg) => {
       this.isUpdateDone = msg.success;
-
-    },(error)=>{console.log(error)})
-    // updateAtmBalanceByCsv
+      this.alertSuccess(msg['message']);
+    }, (error) => { console.log(error) })
   }
 
-  selectedFile(){
+  selectedFile() {
     this.uploadCsv();
   }
 
-  goToTreasury(){
+  alertSuccess(msg: string) {
+    this.alert.success(msg, true);
+  }
+
+  alertError(msg: string) {
+    this.alert.error(msg, true);
+  }
+
+  goToTreasury() {
     this.router.navigate(['/treasury'], { relativeTo: this.route });
   }
-  cancelUpload(){
-        let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#csv');
-         inputEl.value="";       
-    this.dt.raw=[];
-    this.dt.sumUp=[];
-    this.dt.originalName="";
+  cancelUpload() {
+    let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#csv');
+    inputEl.value = "";
+    this.dt.raw = [];
+    this.dt.sumUp = [];
+    this.dt.originalName = "";
     this.isSumUpView = true;
     this.isUpdateDone = false;
     this.isUploadDone = false;

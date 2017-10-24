@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule ,ErrorHandler} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule} from '@angular/http';
 
@@ -7,8 +7,8 @@ import * as _ from "lodash";
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import {DataTableModule } from 'angular-4-data-table-bootstrap-4';
-
+import { DataTableModule } from 'angular-4-data-table-bootstrap-4';
+import { LoggerService,GlobalErrorHandler } from './app-global-error-handler';
 
 import { JwtModule,JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,6 +21,7 @@ import { TechnicianTicketService } from './_services/technician-ticket.service';
 import { PartInventoryService } from './_services/part-inventory.service';
 import { DispatchTicketService } from './_services/dispatch-ticket.service';
 import { TreasuryService } from './_services/treasury.service';
+import { AlertService } from './_services/alert.service';
 
 
 import { AppConfigService } from './_services/app-config.service'
@@ -71,6 +72,8 @@ import { TreasuryWithdrawComponent } from './cmp-treasury/treasury-withdraw/trea
 import { DispatchDepositItemComponent } from './cmp-dispatch-ticket/dispatch-deposit-item/dispatch-deposit-item.component';
 import { AtmStartPageComponent } from './cmp-atm/atm-start-page/atm-start-page.component';
 import { UploadCsvComponent } from './cmp-upload-csv/upload-csv.component';
+import { PageErrorComponent } from './page-error/page-error.component';
+import { AlertComponent } from './alert/alert.component';
 
 
 export function jwtOptionsFactory() {
@@ -131,7 +134,9 @@ export function jwtOptionsFactory() {
     TreasuryWithdrawComponent,
     DispatchDepositItemComponent,
     AtmStartPageComponent,
-    UploadCsvComponent
+    UploadCsvComponent,
+    PageErrorComponent,
+    AlertComponent
     
   ],
   imports: [
@@ -154,9 +159,13 @@ export function jwtOptionsFactory() {
     })
   ],
   providers: [
-      AuthGuard, AuthenticationService, AppConfigService, DispatchTicketService,
-      UserService, CurrentUserService, AtmService, PartInventoryService,TreasuryService,
-      TechnicianTicketService],
+    {
+      provide: ErrorHandler, 
+      useClass: GlobalErrorHandler
+    }, LoggerService, AlertService,
+    AuthGuard, AuthenticationService, AppConfigService, DispatchTicketService,
+    UserService, CurrentUserService, AtmService, PartInventoryService,TreasuryService,
+    TechnicianTicketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

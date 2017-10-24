@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 
-
+import { AlertService } from '../../_services/alert.service';
 import { CurrentUserService } from '../../_services/current-user.service';
 import { TechnicianTicketService } from '../../_services/technician-ticket.service';
 import { TechnicianTicket } from '../../_models/technician-ticket.model';
@@ -73,6 +73,7 @@ export class TechnicianTicketEditComponent implements OnInit {
 
 
   constructor(
+    private alert: AlertService,
     private currentUserService: CurrentUserService,
     private ttService: TechnicianTicketService,
     private route: ActivatedRoute,
@@ -83,6 +84,15 @@ export class TechnicianTicketEditComponent implements OnInit {
     this.selectedAtm = new Atm();
     this.selectedAtm.atmMachineID = undefined;
     this.tt = new TechnicianTicket();
+
+  }
+  alertSuccess(msg: string){
+    this.alert.success(msg,true);
+
+  }
+
+  alertError(msg: string){
+    this.alert.error(msg,true);
 
   }
 
@@ -116,7 +126,6 @@ export class TechnicianTicketEditComponent implements OnInit {
     this.ttsSubscription = this.ttService.getResponsiblePersons()
       .subscribe(response => {
         this.responsiblePersons = response;
-        console.log(this.responsiblePersons);
       },
       error => console.log(error));
   }
@@ -206,7 +215,10 @@ export class TechnicianTicketEditComponent implements OnInit {
         .subscribe(data => {
           this.msg = data;
           if (data['success'] === true) {
+            this.alertSuccess(data['message']);
             this.refreshData();
+          }else{
+            this.alertError(data['message']);
           }
         });
     } else {
@@ -215,7 +227,10 @@ export class TechnicianTicketEditComponent implements OnInit {
         .subscribe(data => {
           this.msg = data;
           if (data['success'] === true) {
-          this.refreshData();
+            this.alertSuccess(data['message']);
+            this.refreshData();
+          }else{
+            this.alertError(data['message']);
           }
         });
     }

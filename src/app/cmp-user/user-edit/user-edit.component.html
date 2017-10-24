@@ -11,13 +11,6 @@
         <div class="alert alert-danger" role="alert" *ngIf="!userForm.valid && userForm.touched">
           Please input all required fields!!
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf="msg?.success===false">
-          {{msg?.message}}
-        </div>
-        <div class="alert alert-info" role="alert" *ngIf="msg?.success===true">
-          {{msg?.message}}
-        </div>
-
         <hr>
         <h3>User Description</h3>
         <hr>

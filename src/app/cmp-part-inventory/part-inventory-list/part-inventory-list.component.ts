@@ -44,13 +44,6 @@ export class PartInventoryListComponent implements OnInit {
 
      this.parts = this.partService.getListPart();
 
-     this.partsSubscription = this.partService.getPartType()
-      .subscribe(
-        (pt:Part) => {
-         console.log(pt);
-        }
-      );
-
   }
 
 }

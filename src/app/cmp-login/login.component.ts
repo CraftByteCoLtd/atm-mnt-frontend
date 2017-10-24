@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-   login(f:NgForm) {
+  login(f:NgForm) {
 
     this.model.username = f.value.username;
     this.model.password = f.value.password;
@@ -39,4 +39,6 @@ export class LoginComponent implements OnInit {
           }
         });
   }
+
+
 }

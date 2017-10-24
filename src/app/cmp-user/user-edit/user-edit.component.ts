@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { User } from '../../_models/user.model';
 import { UserService } from '../../_services/user.service';
+import { AlertService } from '../../_services/alert.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -23,6 +24,7 @@ export class UserEditComponent implements OnInit,OnDestroy {
   msg: any;
 
   constructor(
+    private alert: AlertService,
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService) { }
@@ -158,7 +160,10 @@ export class UserEditComponent implements OnInit,OnDestroy {
         .subscribe(data => {
           this.msg = data;
           if (data['success'] === true) {
+            this.alertSuccess(data['message']);
             this.refreshData();
+          }else{
+            this.alertError(data['message']);
           }
         });
     } else {
@@ -167,10 +172,21 @@ export class UserEditComponent implements OnInit,OnDestroy {
         .subscribe(data => {
           this.msg = data;
           if (data['success'] === true) {
+          this.alertSuccess(data['message']);
           this.refreshData();
+          }else{
+            this.alertError(data['message']);
           }
         });
     }
+  }
+
+  alertSuccess(msg: string){
+    this.alert.success(msg,true);
+  }
+
+  alertError(msg: string){
+    this.alert.error(msg,true);
   }
 
   refreshData(){
@@ -180,6 +196,7 @@ export class UserEditComponent implements OnInit,OnDestroy {
 
     })
   }
+
 
 
   onAddPhone() {

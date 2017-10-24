@@ -5,7 +5,7 @@ import { AppConfigService } from '../../_services/app-config.service';
 import { DispatchTicketService } from '../../_services/dispatch-ticket.service';
 import { TreasuryService } from '../../_services/treasury.service';
 
-
+import { AlertService } from '../../_services/alert.service';
 import { CurrentUserService } from '../../_services/current-user.service';
 import { DispatchTicket } from '../../_models/dispatch-ticket.model';
 import { Treasury } from '../../_models/treasury.model';
@@ -28,6 +28,7 @@ export class TreasuryListComponent implements OnInit {
   txtUpdateBalance = 0;
 
   constructor(
+    private alert: AlertService,
     private authenticationService: AuthenticationService,
     private dtService: DispatchTicketService,
     private route: ActivatedRoute,
@@ -71,8 +72,13 @@ export class TreasuryListComponent implements OnInit {
 
     this.trsSubscription = this.treasuryService.updateTreasuryBalance(newTrs, this.currentUser.fullName)
       .subscribe(data => {
-        this.loadTreasuryInfo();
-        this.loadTreasuryLog();
+        if (data['success']) {
+          this.alertSuccess(data['message']);
+          this.loadTreasuryInfo();
+          this.loadTreasuryLog();
+        }else{
+          this.alertError(data['message']);
+        }
       });
   }
   loadTreasuryLog() {
@@ -96,6 +102,14 @@ export class TreasuryListComponent implements OnInit {
 
   uploadCsv(){
     this.router.navigate(['/treasury-upload-csv'], { relativeTo: this.route });
+  }
+
+  alertSuccess(msg: string){
+    this.alert.success(msg,true);
+  }
+
+  alertError(msg: string){
+    this.alert.error(msg,true);
   }
 
 }

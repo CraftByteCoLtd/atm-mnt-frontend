@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { AppConfigService } from '../../_services/app-config.service';
 import { CurrentUserService } from '../../_services/current-user.service';
 import { AtmService } from '../../_services/atm.service';
+import { AlertService } from '../../_services/alert.service';
+
 import { Atm } from '../../_models/atm.model';
 
 @Component({
@@ -33,6 +35,7 @@ export class AtmEditComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    private alert: AlertService,
     private atmService: AtmService,
     private route: ActivatedRoute,
     private router: Router,
@@ -85,7 +88,7 @@ export class AtmEditComponent implements OnInit, OnDestroy {
     let editAtmLocationLat:number;
     let editAtmLocationLng:number;
     let editAtmNote: string;
-    let editAtmStatus: string;
+    let editAtmStatus: boolean;
 
 
     if (this.editMode) {
@@ -94,7 +97,7 @@ export class AtmEditComponent implements OnInit, OnDestroy {
       editAtmLocationLat = +this.atm.atmLocation['lat'];
       editAtmLocationLng = +this.atm.atmLocation['lng'];
       editAtmNote = this.atm.atmNote;
-      editAtmStatus = this.atm.atmStatus;
+      editAtmStatus = this.atm.atmStatus =='online' ? true:false;
 
     } // check if in editMode
 
@@ -119,6 +122,16 @@ export class AtmEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  alertSuccess(msg: string){
+    this.alert.success(msg,true);
+
+  }
+
+  alertError(msg: string){
+    this.alert.error(msg,true);
+
+  }
+
   onCancel() {
     this.atmForm.clearValidators();
     this.router.navigate(['../'], { relativeTo: this.route });
@@ -131,7 +144,10 @@ export class AtmEditComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.msg = data;
           if (data['success'] === true) {
+            this.alertSuccess(data['message']);
             this.refreshData();
+          }else{
+            this.alertError(data['message']);
           }
         });
     } else {
@@ -140,8 +156,11 @@ export class AtmEditComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.msg = data;
           if (data['success'] === true) {
-          this.refreshData();
+            this.refreshData();
+          }else{
+            this.alertError(data['message']);
           }
+
         });
     }
   }

@@ -1,0 +1,15 @@
+.alert-trim {
+  display: inline-block;
+}
+
+.alert-fixed {
+    position:fixed; 
+    border-top:5px solid;
+    border-left:0px;
+    border-right:0px;
+    top: 0px; 
+    left: 0px; 
+    width: 100%;
+    z-index:999; 
+    border-radius:0px
+}

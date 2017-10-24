@@ -1,14 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import _ from "lodash";
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 import { CurrentUserService } from '../../_services/current-user.service';
 import { DispatchTicket } from '../../_models/dispatch-ticket.model';
 import { DispatchTicketService } from '../../_services/dispatch-ticket.service';
-import _ from "lodash";
+import { AlertService } from '../../_services/alert.service';
 
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-treasury-item',
@@ -32,6 +33,7 @@ export class TreasuryItemComponent implements OnInit {
   dtsSubscription: Subscription;
 
   constructor(
+    private alert: AlertService,
     private dtService: DispatchTicketService,
     private route: ActivatedRoute,
     private router: Router,
@@ -68,7 +70,13 @@ export class TreasuryItemComponent implements OnInit {
     this.dtsSubscription = this.dtService.doWithdrawDispatchTicket(withdrawItem)
       .subscribe(data => {
         this.msg = data;
-        this.refreshData();
+        if (data['success'] === true) {
+            this.alert.success(data['message'],true);
+            this.refreshData();
+        }else{
+          this.alert.error(data['message'], true);
+        }
+
       });
   }
 
@@ -97,7 +105,13 @@ export class TreasuryItemComponent implements OnInit {
     this.dtsSubscription = this.dtService.doClosedDispatchTicket(closedItem)
       .subscribe(data => {
         this.msg = data;
-        this.refreshData();
+        
+        if (data['success'] === true) {
+            this.alert.success(data['message'],true);
+            this.refreshData();
+        }else{
+          this.alert.error(data['message'], true);
+        }
       });
 
   }
