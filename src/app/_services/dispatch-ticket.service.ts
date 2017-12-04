@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/Rx';
+import _ from 'lodash';
 
 import { AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
@@ -182,3 +183,5 @@ export class DispatchTicketService {
   }
 
 }
+
+
