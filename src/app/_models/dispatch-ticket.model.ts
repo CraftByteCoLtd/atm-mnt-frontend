@@ -20,13 +20,24 @@ interface DtAtm{
   deposit: number;
   badBill: number;
   dtAtmStatus: string;
+  dtRefilledMoney: number;
+  dtEstLoadDay:number;
+  isSelected:boolean;
+}
+
+interface ManualTask{
+  taskTitle: string;
+  taskDetail: string;
+  taskStatus: boolean; 
 }
 
 export class DispatchTicket {
   public dtID?: string;
+  public dtAssignmentDate: Date;
   public dtResponsiblePersons: ResponsiblePerson[];
   public dtAtms: DtAtm[];
   public dtTechnicianTickets: TechnicianTicket[];
+  public dtManualTasks: ManualTask[];
   public dtStatus: string;
   public dtWithdrawBalance: number;
   public created?: Date;
