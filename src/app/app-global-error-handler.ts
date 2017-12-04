@@ -4,12 +4,9 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class LoggerService {
-
-
 	log(error) {
 		console.log("Logger", error);
 	}
-	
 
 }
 
@@ -24,10 +21,11 @@ export class GlobalErrorHandler extends ErrorHandler {
 	handleError(error) {
 		const loggingService = this.injector.get(LoggerService);
 		this.router = this.injector.get(Router);
-
 		console.log("Error");
-		this.customHandleError(error);
+		//uncomment below to see the fully error detail
+	    this.customHandleError(error);
 		loggingService.log(error);
+
 		// Important : rethrow the error otherwise it gets swallowed
 		throw error;
 		// super.handleError(error);
