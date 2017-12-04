@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import _ from "lodash";
+import  * as _ from "lodash";
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
@@ -29,6 +29,7 @@ export class TreasuryItemComponent implements OnInit {
   sumCurrentBalance = 0;
   sumActualRemaining = 0;
   sumActualBalance = 0;
+  sumRefilledMoney=0;
 
   dtsSubscription: Subscription;
 
@@ -48,7 +49,7 @@ export class TreasuryItemComponent implements OnInit {
     this.sumDeposit = _.sumBy(this.dt.dtAtms, "deposit");
     this.sumCurrentBalance = (this.sumRemainingBalance + this.sumDeposit) - this.sumBadBill;
     this.sumActualBalance = (this.sumActualRemaining + this.sumDeposit) - this.sumBadBill;
-
+    this.sumRefilledMoney = _.sumBy(this.dt.dtAtms, 'dtRefilledMoney');
     this.currentUser = this.currentUserService.getCurrentUserInfo();
 
   }
@@ -82,7 +83,6 @@ export class TreasuryItemComponent implements OnInit {
 
 
   onRecieved(frmClosed: NgForm) {
-    console.log(frmClosed);
     let returnAmount = frmClosed.value.txtReturnAmount;
     let closedItem: ClosedItem;
 

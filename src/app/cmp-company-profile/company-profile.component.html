@@ -1,3 +1,123 @@
-<p>
-  company-profile works!
-</p>
+<div class="card col-center">
+  <div class="card-block">
+    <h3 class="card-title"><i class="fa fa-building-o" aria-hidden="true"></i> Company Profile</h3>
+    <hr>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div>
+        <nav class="navbar bg-light-blue">
+        <button [disabled]="!profileForm.valid" class="btn btn-lg btn-success" type="submit">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        Save change</button>
+     
+     </nav>
+        <div class="alert" role="alert" *ngIf="!profileForm.valid && profileForm.touched">
+          Please input all required fields!!
+        </div>
+        <hr>
+        <label class="label-fix-width">Logo:</label >
+        <hr>
+      </div>
+
+  <div class="form-row">
+    <div class="col-12" style="margin-bottom: 5px;">
+          <img  class="rounded mx-auto d-block img-thumbnail" src="{{profileLogo}}" data-holder-rendered="true" >
+    </div>
+    <div class="upload-btn-wrapper mx-auto">
+      <input  id="logo" type="file" (change)="uploadLogo()" />
+      <button type="button" 
+      [disabled] = "isUploadDone"
+      class="btn btn-info btn-sx pull-left" 
+      (click)="uploadLogo()">
+      <i class="fa fa-upload" aria-hidden="true"></i>
+      Upload the logo {{ isUploadDone?" (Done)": "" }}
+      </button>
+    </div>  
+    <br>
+  </div>
+ <hr>
+
+  <div class="form-row form-inline">
+      <div class="form-group col-12">
+        <label class="label-fix-width" for="companyId">Company ID</label>
+        <input #companyId formControlName="companyId" type="text" class="form-control col-12" placeholder="Enter companyId">
+        <div class="alert" *ngIf="profileForm.get('companyId').hasError('required') && profileForm.get('companyId').touched">
+              Company ID is required
+        </div>
+      </div>
+   </div>
+
+      <div class="form-row form-inline">
+      <div class="form-group col-12">
+        <label class="label-fix-width" for="companyName">Company Name</label>
+        <input #companyName formControlName="companyName" type="text" class="form-control col-12" placeholder="Enter companyName">
+        <div class="alert" *ngIf="profileForm.get('companyName').hasError('required') && profileForm.get('companyName').touched">
+              Company Name is required
+        </div>
+      </div>
+   </div>
+    <div class="form-row form-inline">
+      <div class="form-group col-12">
+        <label class="label-fix-width" for="companyOwner">Company Owner</label>
+        <input #companyOwner formControlName="companyOwner" type="text" class="form-control col-12" placeholder="Enter company Owner">
+        <div class="alert" *ngIf="profileForm.get('companyOwner').hasError('required') && profileForm.get('companyOwner').touched">
+              Company Owner is required
+        </div>
+      </div>
+   </div>
+    <div class="form-row form-inline">
+      <div class="form-group col-12">
+        <label class="label-fix-width" for="companyDetail">Company Detail</label>
+       <!--  <input #companyDetail formControlName="companyDetail" type="text" class="form-control col-12" placeholder="Enter Company Detail"> -->
+           <textarea #companyDetail formControlName="companyDetail" class="form-control col-12" placeholder="Enter Company Detail" rows="3"></textarea>
+
+
+        <div class="alert" *ngIf="profileForm.get('companyDetail').hasError('required') && profileForm.get('companyDetail').touched">
+              CompanyDetail is required
+        </div>
+      </div>
+   </div>
+
+    <div class="form-row form-inline">
+      <div class="form-group col-12">
+        <label class="label-fix-width" for="companyEmail">Company Email</label>
+        <input #companyEmail formControlName="companyEmail" type="text" class="form-control col-12" placeholder="Enter Company Email">
+        <div class="alert" *ngIf="profileForm.get('companyEmail').hasError('required') && profileForm.get('companyEmail').touched">
+              Company Email is required
+        </div>
+      </div>
+   </div>
+
+    <div class="form-row form-inline">
+      <div class="form-group col-12">
+        <label class="label-fix-width" for="companyPhone">Company Phone</label>
+        <input #companyPhone formControlName="companyPhone" type="text" class="form-control col-12" placeholder="Enter Company Phone">
+        <div class="alert" *ngIf="profileForm.get('companyPhone').hasError('required') && profileForm.get('companyPhone').touched">
+              Company Phone is required
+        </div>
+      </div>
+   </div>
+    <div class="form-row form-inline">
+      <div class="form-group col-12">
+        <label class="label-fix-width" for="companyLogo">Company Logo</label>
+        <input #companyLogo formControlName="companyLogo" type="text" class="form-control col-12" placeholder="Enter Company Logo">
+        <div class="alert" *ngIf="profileForm.get('companyLogo').hasError('required') && profileForm.get('companyLogo').touched">
+              Company Logo is required
+        </div>
+      </div>
+   </div>
+   <hr>
+
+     <div class="form-row">
+      <div class="mx-sm-12">
+        <label class="form-check-label">
+          <input class="form-check-input"
+          type="checkbox"
+          formControlName="companyIsActive">
+          Is Active
+        </label>
+      </div>
+    </div>
+
+</form>
+</div>
+</div>

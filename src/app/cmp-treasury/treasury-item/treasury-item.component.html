@@ -59,6 +59,7 @@
 											<th>Bad Bill</th>
 											<th>Expected Balance</th>
 											<th>Actual Balance</th>
+											<th>Refilled Money</th>
 
 										</tr>
 										<tr *ngFor="let dta of dt.dtAtms ">
@@ -69,6 +70,7 @@
 											<td>{{dta.badBill}}</td>
 											<td>{{(dta.remainingBefore + dta.deposit ) - dta.badBill}}</td>
 											<td>{{(dta.actualRemaining + dta.deposit ) - dta.badBill}}</td>
+											<td>{{dta.dtRefilledMoney}}</td>
 
 
 										</tr>
@@ -94,9 +96,13 @@
 												<strong>{{ sumCurrentBalance | currency:'USD':true}}
 												</strong>
 											</td>
-																						<td>
+											<td>
 												<strong>{{ sumActualBalance | currency:'USD':true}}
 												</strong>
+											</td>
+											<td>
+												<h5>{{ sumRefilledMoney | currency:'USD':true}}
+												</h5>
 											</td>
 										</tr>
 									</table>

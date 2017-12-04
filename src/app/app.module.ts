@@ -6,7 +6,7 @@ import { HttpModule} from '@angular/http';
 import * as _ from "lodash";
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DataTableModule } from 'angular-4-data-table-bootstrap-4';
 import { LoggerService,GlobalErrorHandler } from './app-global-error-handler';
 
@@ -22,6 +22,7 @@ import { PartInventoryService } from './_services/part-inventory.service';
 import { DispatchTicketService } from './_services/dispatch-ticket.service';
 import { TreasuryService } from './_services/treasury.service';
 import { AlertService } from './_services/alert.service';
+import { CompanyProfileService } from './_services/company-profile.service';
 
 
 import { AppConfigService } from './_services/app-config.service'
@@ -144,7 +145,7 @@ export function jwtOptionsFactory() {
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    NgxDatatableModule,
+    // NgxDatatableModule,
     DataTableModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBn9SD4FNh0lXNepclv6968CmXrow_hF1s'
@@ -165,7 +166,7 @@ export function jwtOptionsFactory() {
     }, LoggerService, AlertService,
     AuthGuard, AuthenticationService, AppConfigService, DispatchTicketService,
     UserService, CurrentUserService, AtmService, PartInventoryService,TreasuryService,
-    TechnicianTicketService],
+    TechnicianTicketService, CompanyProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

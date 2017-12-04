@@ -34,3 +34,9 @@ li.list-group-item.log-item-box {
 .update-balance-box{
     padding-bottom: 15px;
 }
+
+.init-text{
+    margin-top:15px;
+    z-index: 0;
+    color:#fff;
+}

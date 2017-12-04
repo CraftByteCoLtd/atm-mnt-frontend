@@ -15,6 +15,8 @@
     	 <small><strong>Deposit</strong> :{{at.deposit | currency:'USD':true}} </small><br>
 		 <small><strong>Bad Bill:</strong> :{{at.badBill | currency:'USD':true}} </small><br>
 		 <small><strong>Balance:</strong> :{{(at.actualRemaining -at.badBill)+at.deposit | currency:'USD':true}} </small><br>
+		 	 <small><strong>Refilled Money:</strong> :{{at.dtRefilledMoney| currency:'USD':true}} </small><br>
+		 
 
     </div>
 	<div class="col">

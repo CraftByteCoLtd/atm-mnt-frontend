@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import _ from "lodash";
+import * as _ from "lodash";
 import { AuthenticationService } from '../../_services/authentication.service';
 import { AtmService } from '../../_services/atm.service';
 import { AppConfigService } from '../../_services/app-config.service';

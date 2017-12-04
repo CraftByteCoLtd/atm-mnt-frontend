@@ -2,19 +2,30 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-block">
-
         <div class="form-group">
-          <button disabled 
-          class="btn btn-outline-info pull-left"  >Export CSV</button>
-
-          <button 
-          *ngIf="this.currentUser.authRules.isDispatcherManager === true" 
+          
+          <button
+          *ngIf="this.currentUser.authRules.isDispatcherManager === true"
           class="btn btn-success pull-right"  (click)="onAddNew()">New</button>
+        </div>
+        <div class="form-inline pull-left">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary" id="filterDropDown" ngbDropdownToggle>Filter: {{isActive?'Active':'Archived' }}</button>
+            <div ngbDropdownMenu aria-labelledby="filterDropDown">
+              <button
+              title="Active Ticket's included: Open, Withdraw, Recieved, Completed"
+              class="dropdown-item" (click)="onFilter(true)">Show Active Ticket</button>
+              <button
+              title="Only the Closed Dispatch Ticket will be shows"
+              class="dropdown-item" (click)="onFilter(false)">Show Archived Ticket</button>
+            </div>
+          </div>
         </div>
         <br><br>
         <h5 class="card-title"><i class="fa fa-atm" aria-hidden="true"></i>Manage Dispatch Ticket</h5>
-        <app-dispatch-ticket-item *ngFor="let dt of dts " [dt]="dt" [dtId]="dt._id"></app-dispatch-ticket-item>
-      </div>
-    </div>
+      <pre *ngIf="dts.length < 1">- No {{isActive?'Active':'Archived' }} Ticket-</pre>
+    <app-dispatch-ticket-item *ngFor="let dt of dts " [dt]="dt" [dtId]="dt._id"></app-dispatch-ticket-item>
   </div>
+</div>
+</div>
 </div>

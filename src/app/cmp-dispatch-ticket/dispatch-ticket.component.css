@@ -1,0 +1,9 @@
+#init-text{
+	margin-top:15px;
+	position: fixed;
+    z-index: 0;
+}
+
+.display-4{
+	color:#fff;
+}

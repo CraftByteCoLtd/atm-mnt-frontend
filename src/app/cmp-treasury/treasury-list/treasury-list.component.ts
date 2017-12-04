@@ -26,6 +26,7 @@ export class TreasuryListComponent implements OnInit {
   trs: Treasury;
   trsSubscription: Subscription;
   txtUpdateBalance = 0;
+  isActive: boolean = true;
 
   constructor(
     private alert: AlertService,
@@ -38,29 +39,49 @@ export class TreasuryListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dtsSubscription = this.dtService.getActiveDispatchTickets()
-      .subscribe(
-      (dts: DispatchTicket[]) => {
-        this.dts = dts;
-        this.dtService.setListDispatchTicket(dts);
-      }
-      );
-
-    this.dtsSubscription = this.dtService.DispatchTicketChanged
-      .subscribe(
-      (dts: DispatchTicket[]) => {
-        this.dts = dts;
-        this.loadTreasuryInfo();
-        this.loadTreasuryLog();
-      }
-      );
-
-    this.dts = this.dtService.getListDispatchTicket();
+    this.onFilter(this.isActive);
+    this.loadTreasuryInfo();
     this.currentUser = this.currentUserService.getCurrentUserInfo();
     this.loadTreasuryLog();
 
 
+    this.dtsSubscription = this.dtService.DispatchTicketChanged
+      .subscribe(
+        (dts: DispatchTicket[]) => {
+          this.dts = dts;
+          this.loadTreasuryInfo();
+          this.loadTreasuryLog();
+        }
+      );
+
   }
+
+  onFilter(isActiveParam: boolean) {
+
+    this.isActive = isActiveParam;
+    if (isActiveParam) {
+      this.dtsSubscription = this.dtService.getActiveDispatchTickets()
+        .subscribe(
+        (dts: DispatchTicket[]) => {
+          this.dts = dts;
+          this.dtService.setListDispatchTicket(dts);
+        }
+        );
+
+    } else {
+      this.dtsSubscription = this.dtService.getDispatchTickets()
+        .subscribe(
+        (dts: DispatchTicket[]) => {
+          this.dts = dts;
+          this.dtService.setListDispatchTicket(dts);
+        }
+        );
+    }
+
+    this.dts = this.dtService.getListDispatchTicket();
+  }
+
+
   updateTreasuryBalance() {
     let cfResult = confirm('Confirm to update Treasury balance to (' + this.txtUpdateBalance + ')?');
     if (cfResult === false) return;
@@ -76,7 +97,8 @@ export class TreasuryListComponent implements OnInit {
           this.alertSuccess(data['message']);
           this.loadTreasuryInfo();
           this.loadTreasuryLog();
-        }else{
+          this.onFilter(this.isActive);
+        } else {
           this.alertError(data['message']);
         }
       });
@@ -100,16 +122,16 @@ export class TreasuryListComponent implements OnInit {
       );
   }
 
-  uploadCsv(){
+  uploadCsv() {
     this.router.navigate(['/treasury-upload-csv'], { relativeTo: this.route });
   }
 
-  alertSuccess(msg: string){
-    this.alert.success(msg,true);
+  alertSuccess(msg: string) {
+    this.alert.success(msg, true);
   }
 
-  alertError(msg: string){
-    this.alert.error(msg,true);
+  alertError(msg: string) {
+    this.alert.error(msg, true);
   }
 
 }

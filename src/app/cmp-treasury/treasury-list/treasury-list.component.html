@@ -10,67 +10,77 @@
 	</p>
 	<input class="form-control " name="txtRemaining" type="number"  [(ngModel)] ="txtUpdateBalance"><br>
 	<div class="btn-group" role="group">
-	<button class="btn btn-primary btn-sm" (click)="updateTreasuryBalance();p.close()" type="submit">Save</button>
-	<button class="btn btn-danger btn-sm" (click)="p.close()">Cancel</button>
+		<button class="btn btn-primary btn-sm" (click)="updateTreasuryBalance();p.close()" type="submit">Save</button>
+		<button class="btn btn-danger btn-sm" (click)="p.close()">Cancel</button>
 	</div>
 </div>
 </ng-template>
-
 <ng-template #popLogContent>
 <ul class="list-group">
- <li class="list-group-item log-item-box" *ngFor="let tl of trsLogs ">
-  <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
-  <small>{{ tl.updated | date:'medium' }}</small><br>
-  <span class="log-text">{{tl?.oldBalance | currency:'USD':true}}</span>
-  <span class="log-text"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-  <span class="log-text log-new-balance">{{tl?.newBalance | currency:'USD':true}}</span>
-  <i class="fa fa-user-plus-o" aria-hidden="true"></i><br>
-  <span><i class="fa fa-user-o" aria-hidden="true"></i>: {{ tl.updatedBy}}</span><br>
-  <span class="log-text">Note : {{ tl.logType}}.</span>
- </li>
- <li class="list-group-item log-item-box">
- <button class="btn btn-danger btn-sm" (click)="pl.close()">
- 	Close
- </button>
- <small class="text-muted">*Only the 10 latest records.</small>
-</li>
+	<li class="list-group-item log-item-box" *ngFor="let tl of trsLogs ">
+		<i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+		<small>{{ tl.updated | date:'medium' }}</small><br>
+		<span class="log-text">{{tl?.oldBalance | currency:'USD':true}}</span>
+		<span class="log-text"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+		<span class="log-text log-new-balance">{{tl?.newBalance | currency:'USD':true}}</span>
+		<i class="fa fa-user-plus-o" aria-hidden="true"></i><br>
+		<span><i class="fa fa-user-o" aria-hidden="true"></i>: {{ tl.updatedBy}}</span><br>
+		<span class="log-text">Note : {{ tl.logType}}.</span>
+	</li>
+	<li class="list-group-item log-item-box">
+		<button class="btn btn-danger btn-sm" (click)="pl.close()">
+		Close
+		</button>
+		<small class="text-muted">*Only the 10 latest records.</small>
+	</li>
 </ul>
-
 </ng-template>
 <div class="row">
 	<div class="col-md-12">
 		<nav class="navbar bg-light-blue">
 			<h4>
 			<i _ngcontent-c1="" aria-hidden="true" class="fa fa-money"></i>
-			Managed Dispatch Ticket by Treasury</h4>
-			          
+			Managed Dispatch Ticket by Treasury
+			</h4>
 			<div class="balance-box">
-
 				<span class="pull-right badge bedge-pill badge-secondary">Remaining</span>
 				<h3 class="pull-right">{{trs?.treasuryBalance | currency:'USD':true}}</h3><br>
 				<div class="btn-group" role="group">
-					<button 
+					<button
 					placement="bottom" triggers="click:click"
 					[ngbPopover]="popLogContent" container="body"  #pl="ngbPopover" popoverTitle="Changed logs:"
 					type="button" class="btn btn-light"><i class="fa fa-history" aria-hidden="true"></i> Latest updated log</button>
 					<button type="button" class="btn btn-success"
 					placement="bottom"Title="Update ATM Balance by CSV" (click)="uploadCsv()">
 					Update ATM Balance by CSV
-					</button> 
-
+					</button>
 					<button type="button" class="btn btn-primary pull-right"
 					placement="bottom" container="body"
 					[ngbPopover]="popContent"  #p="ngbPopover" popoverTitle="Update Treasury Balance">
 					Update Treasury
-					</button> 
-
-					<button disabled 
-          class="btn btn-outline-info pull-right"  >Export CSV</button> 
-
-
+					</button>
+					<!-- <button disabled
+					class="btn btn-outline-info pull-right"  >Export CSV</button>  -->
+					<div class="form-inline pull-right">
+						<div ngbDropdown class="d-inline-block">
+							<button class="btn btn-outline-primary" id="filterDropDown" ngbDropdownToggle>Filter: {{isActive?'Active':'Archived' }}</button>
+							<div ngbDropdownMenu aria-labelledby="filterDropDown">
+								<button
+								title="Active Ticket's included: Open, Withdraw, Recieved, Completed"
+								class="dropdown-item" (click)="onFilter(true)">Active Only</button>
+								<button
+								title="Only the Closed Dispatch Ticket will be shows"
+								class="dropdown-item" (click)="onFilter(false)">Archived Only</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</nav>
 	<app-treasury-item *ngFor="let dt of dts " [dt]="dt" [dtId]="dt._id"></app-treasury-item>
+		<h3 class="text-center init-text" *ngIf="dts.length < 1">
+		- No {{isActive?'Active':'Archived' }} Dispatch Ticket-
+		<small class="text-muted"></small>
+		</h3>
 </div>
 </div>

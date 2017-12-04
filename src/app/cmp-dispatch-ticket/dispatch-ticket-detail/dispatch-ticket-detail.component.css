@@ -64,4 +64,11 @@ nav.navbar.bg-light-blue {
   background: #8bc34a;
   color:#fff;
 }
+.list-group-item{
+  border: 0px;
+}
+.task-row{
+  border-bottom:1px solid #ccc;
+  padding-top:5px;
+}
 

@@ -36,6 +36,10 @@ label{
 
 }
 
+th.column-header > span {
+    font-size: small;
+}
+
 .ngx-datatable.material{
   box-shadow: 0px 0px 0px;
 }
@@ -45,5 +49,42 @@ label{
 }
 nav.navbar.bg-light-blue {
     background-color: #ccc;
+    border-radius: 5px;
+}
+th.column-header.column-isSelected  {
+    width: 80px;
+}
+th.column-header.column-location {
+    width: 59px;
+}
+th.index-column-header {
+    width: 50px !important;
+}
+.popover {
+  max-width: 100%;
+  }
+
+dl.row,dt,dd{
+  font-size:small;
+}
+
+.detail-box{
+      background: rgba(96, 125, 139, 0.26);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.task-text{
+  padding: 5px;
+}
+
+.btn-link{
+    cursor: pointer;
+    outline: 0;
+    border: 0px;
+}
+.bg-light {
+    background-color: #FFF!important;
+    border-bottom: 2px solid #2196F3;
     border-radius: 5px;
 }

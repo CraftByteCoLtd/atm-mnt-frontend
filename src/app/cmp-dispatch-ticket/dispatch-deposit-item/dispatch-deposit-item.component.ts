@@ -30,7 +30,8 @@ export class DispatchDepositItemComponent implements OnInit {
 
 	ngOnInit() {
 		this.txtRemaining = this.at.remainingBefore;
-		this.txtDeposit = this.at.deposit;
+		// this.txtDeposit = this.at.deposit;
+		this.txtDeposit = this.at.dtRefilledMoney;
 		this.txtBadBill = this.at.badBill;
 		this.txtTotal = this.at.txtRemaining;
 		if (this.at.actualRemaining) {
@@ -57,7 +58,7 @@ export class DispatchDepositItemComponent implements OnInit {
 			return false;
 		}
 
-		let cfResult = confirm('Confirm Recieved Money from Treasury?');
+		let cfResult = confirm('Confirm to Deposit Money?');
 		if (cfResult === false) return;
 
 		const _RECIEVED_STATUS = 'recieved';

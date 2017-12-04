@@ -3,13 +3,14 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { AppConfigService } from '../../_services/app-config.service';
 import { DispatchTicketService } from '../../_services/dispatch-ticket.service';
-import _ from "lodash";
+import  * as _ from "lodash";
 import { NgForm } from '@angular/forms';
 
 import { CurrentUserService } from '../../_services/current-user.service';
 import { DispatchTicket } from '../../_models/dispatch-ticket.model';
 import { Subscription } from 'rxjs/Subscription';
-import { TechnicianTicket} from '../../_models/technician-ticket.model'
+import { TechnicianTicket} from '../../_models/technician-ticket.model';
+import { AlertService } from '../../_services/alert.service';
 
 @Component({
   selector: 'app-dispatch-ticket-detail',
@@ -29,6 +30,7 @@ export class DispatchTicketDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private dtService: DispatchTicketService,
     private currentUserService: CurrentUserService,
+    private alert: AlertService
 
   ) {
     this.dt = new DispatchTicket();
@@ -78,10 +80,25 @@ export class DispatchTicketDetailComponent implements OnInit, OnDestroy {
 
     this.dtsSubscription = this.dtService.doRecievedDispatchTicket(recievedItem)
       .subscribe(data => {
+        this.alert.info('The Dispatch Ticket status changed to Recieved.');
         this.loadInitial();
       });
   }
 
+  taskAction(i, status) {
+    let cfResult = confirm('Confirm to Change the Task Status?');
+    if (cfResult === false) return;
+
+    this.dt.dtManualTasks[i].taskStatus = status;
+
+    this.dtsSubscription = this.dtService.updateDispatchTicket(this.dt)
+      .subscribe(data => {
+        if (data['success'] === true) {
+          this.alert.info('Updated Task Status Successfully')
+          this.loadInitial();
+        }
+      });
+  }
 
   onDoneAllDeposit() {
     var openItem = _.find(this.dt.dtAtms, { dtAtmStatus: "open" })
@@ -90,6 +107,22 @@ export class DispatchTicketDetailComponent implements OnInit, OnDestroy {
 
   onCompleted() {
 
+
+    // validate the manualTasks must all completed
+    let notCompletedTask =  _.findIndex(this.dt.dtManualTasks,{taskStatus:false});
+    if (notCompletedTask > -1 ) {
+      this.alert.error('All Manual tasks are required to be completed!');
+      return false;
+    }
+
+    // validate the Technician Ticket must all completed 
+    let notCompletedTT = _.findIndex(this.dt.dtTechnicianTickets,{tTicketStatus:"open"});
+    if (notCompletedTT > -1) {
+  
+      this.alert.error('All Technician Tickets are required to be completed!');
+      return false;
+     }
+
     let cfResult = confirm('Confirm as a Completed Dispatch?');
     if (cfResult === false) return;
     let completedItem: CompletedItem = {
@@ -97,7 +130,7 @@ export class DispatchTicketDetailComponent implements OnInit, OnDestroy {
     }
     this.dtsSubscription = this.dtService.doMarkCompletedDispatchTicket(completedItem)
       .subscribe(data => {
-        console.log(data);
+        this.alert.info('Updated Dispatch Status To Completed ');
         this.loadInitial();
         this.refreshListData()
       });
@@ -119,8 +152,6 @@ export class DispatchTicketDetailComponent implements OnInit, OnDestroy {
   }
 
   onTtCompleted(f: NgForm, tt: TechnicianTicket) {
-    console.log(f);
-    console.log(tt);
     let cfResult = confirm('Confirm as a Completed Technician Ticket?');
     if (cfResult === false) return;
     let completedTtItem: CompletedTtItem = {
@@ -131,8 +162,8 @@ export class DispatchTicketDetailComponent implements OnInit, OnDestroy {
     }
     this.dtsSubscription = this.dtService.doClosedTechicianTicket(completedTtItem)
       .subscribe(data => {
-        console.log(data);
-        this.loadInitial();
+        this.alert.info('The Technician Ticket status changed to Completed.')
+         this.loadInitial();
         this.refreshListData()
       });
   }

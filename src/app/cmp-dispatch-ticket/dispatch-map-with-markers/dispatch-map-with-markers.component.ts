@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Atm } from '../../_models/atm.model';
-import _ from "lodash";
+import * as _ from "lodash";
 
 @Component({
   selector: 'app-dispatch-map-with-markers',

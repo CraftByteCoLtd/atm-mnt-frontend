@@ -2,19 +2,26 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-block">
-
         <div class="form-group" *ngIf="this.currentUser.authRules.isAdmin === true">
+          <button class="btn btn-outline-info" (click)="onAtmOnMap()"><i class="fa fa-map" aria-hidden="true" ></i> ATMs on a Map</button>
           <button class="btn btn-success pull-right" (click)="onAddAtm()">New machine</button>
         </div>
         <h4 class="card-title"><i class="fa fa-atm" aria-hidden="true"></i>Manage ATM Machine</h4>
         <nav class="navbar navbar-light bg-light-blue">
-          <form class="form-inline">
-            <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <div class="form-inline">
+            <input class="form-control"
+            (keyup)="onChangeSearchText()"
+            (keyup.enter)="onSearch();"
+            [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"
+            type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" (click)="onSearch()"><i class="fa fa-search" aria-hidden="true"></i></button>
+            <button
+            *ngIf="searchText.length > 0"
+            class="btn btn-outline-danger" (click)="onClear()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+          </div>
         </nav>
-        <app-atm-item *ngFor="let atm of atms " [atm]="atm" [atmId]="atm._id"></app-atm-item>
-      </div>
+      <app-atm-item *ngFor="let atm of atms " [atm]="atm" [atmId]="atm._id"></app-atm-item>
     </div>
   </div>
+</div>
 </div>

@@ -20,6 +20,7 @@ export class DispatchTicketListComponent implements OnInit {
   dtsSubscription: Subscription;
   subjectSubscription: Subscription;
   currentUser: any;
+  isActive: boolean = true;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -31,7 +32,15 @@ export class DispatchTicketListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dtsSubscription = this.dtService.getDispatchTickets()
+   this.onFilter(true);
+   this.currentUser = this.currentUserService.getCurrentUserInfo();
+
+  }
+
+  onFilter(isActiveParam:boolean){
+    this.isActive = isActiveParam;
+    if (isActiveParam) {
+     this.dtsSubscription = this.dtService.getActiveDispatchTickets()
      .subscribe(
        (dts: DispatchTicket[]) => {
          this.dts = dts;
@@ -39,6 +48,16 @@ export class DispatchTicketListComponent implements OnInit {
        }
      );
 
+    }else{
+    this.dtsSubscription = this.dtService.getDispatchTickets()
+     .subscribe(
+       (dts: DispatchTicket[]) => {
+         this.dts = dts;
+         this.dtService.setListDispatchTicket(dts);
+       }
+     );
+    }
+     
      this.dtsSubscription = this.dtService.DispatchTicketChanged
       .subscribe(
         (dts: DispatchTicket[]) => {
@@ -47,12 +66,10 @@ export class DispatchTicketListComponent implements OnInit {
       );
 
      this.dts = this.dtService.getListDispatchTicket();
-     this.currentUser = this.currentUserService.getCurrentUserInfo();
 
   }
-
-
   onAddNew(){
+    this.onFilter(true);
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 

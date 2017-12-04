@@ -15,25 +15,24 @@
       *ngIf="this.currentUser.authRules.isAtmVaulter === true && dt.dtStatus === 'withdraw'"
       class="btn btn-recieved" (click)="onRecieved()"><i class="fa fa-usd" aria-hidden="true"></i> Recieved Money</button>
     </div>
-
-
   </nav>
- <nav class="breadcrumb pull-left">
-  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'open'}">Open</a>
-  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'withdraw'}">Withdraw</a>
-  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'recieved'}">Recieved</a>
-  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'completed'}">Completed</a>
-  <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'closed'}">Closed</a>
-</nav>
+  <nav class="breadcrumb pull-left">
+    <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'open'}">Open</a>
+    <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'withdraw'}">Withdraw</a>
+    <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'recieved'}">Recieved</a>
+    <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'completed'}">Completed</a>
+    <a class="breadcrumb-item" [ngClass]="{active:dt.dtStatus == 'closed'}">Closed</a>
+  </nav>
   <div class="card-body">
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
         <h4>Dispatch Ticket ID : {{ dt.dtID }}</h4>
         <div class="pull-left">
-        <small>Dispatch Ticket status : </small><span class="badge badge-pill" ngClass="{{dt.dtStatus}}">
-          {{ dt.dtStatus }}
-        </span><br>
-        <strong>Withdraw Amount : <h5>{{ dt.dtWithdrawBalance | currency:'USD':true}}</h5></strong>
+          <strong>  <i class="fa fa-calendar-check-o" aria-hidden="true"></i>Assignment Date: <h5>{{ dt.dtAssignmentDate | date:'mediumDate' }}</h5></strong>
+          <small>Dispatch Ticket status : </small><span class="badge badge-pill" ngClass="{{dt.dtStatus}}">
+            {{ dt.dtStatus }}
+          </span><br>
+          <strong>Withdraw Amount : <h5>{{ dt.dtWithdrawBalance | currency:'USD':true}}</h5></strong>
         </div>
         <div class="pull-right">
           <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
@@ -43,7 +42,11 @@
         </div>
       </li>
       <li class="list-group-item">
-        <h4>Responsible Person</h4>
+        <ngb-tabset>
+        <ngb-tab>
+        <ng-template ngbTabTitle><b><i class="fa fa-user-secret" aria-hidden="true"></i> Responsible Person</b></ng-template>
+        <ng-template ngbTabContent>
+        <br>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -66,17 +69,23 @@
             </tr>
           </tbody>
         </table>
-      </li>
-      <li class="list-group-item">
-        <h4 class=""> <strong>Services ATM Machine</strong></h4>
-        <app-dispatch-deposit-item
+        </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+        <ng-template ngbTabTitle><b><i class="fa fa-building" aria-hidden="true"></i> Services ATM Machines</b></ng-template>
+        <ng-template ngbTabContent>
+        <br>        <app-dispatch-deposit-item
           *ngFor="let at of dt.dtAtms;"
           [at]="at" [dtId]="dt._id" [currentUser]="currentUser" [dt]="dt"
           >
           
         </app-dispatch-deposit-item>
-      </li>
-      <li class="list-group-item">
+        </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+        <ng-template ngbTabTitle><b><i class="fa fa-map" aria-hidden="true"></i> Map</b></ng-template>
+        <ng-template ngbTabContent>
+        <br>
         <div class="row">
           <div class="col-md-12">
             <app-dispatch-map-with-markers
@@ -84,10 +93,13 @@
             </app-dispatch-map-with-markers>
           </div>
         </div>
-      </li>
-      <li class="list-group-item">
-        <h4> TechnicianTicket </h4>
-        <span *ngIf="!dt.dtTechnicianTickets?.length">- no technician ticket for this Dispatch Ticket. -</span>
+        </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+        <ng-template ngbTabTitle><b><i _ngcontent-c16="" aria-hidden="true" class="fa fa-ticket"></i>TechnicianTicket</b></ng-template>
+        <ng-template ngbTabContent>
+        <br>
+        <span *ngIf="!dt.dtTechnicianTickets?.length">- No Technician ticket for this Dispatch Ticket. -</span>
         <div class="row">
           <div class="col-md-12">
             <div class="card-deck">
@@ -127,9 +139,6 @@
                       #tf="ngForm" (ngSubmit)="onTtCompleted(tf,tt)" novalidate>
                       <div class="form-group">
                         <label for="txtResolution">Solution Note: </label>
-                       <!--  <input ngModel required #txtResolution name="txtResolution"
-                        type="text" class="form-control col-sm" id="txtResolution" placeholder="Please enter text"> -->
-
                         <textarea rows="4" cols="50"
                         ngModel required #txtResolution name="txtResolution" id="txtResolution" class="form-control col-sm">
                         </textarea>
@@ -143,8 +152,54 @@
             </div>
           </div>
         </div>
-      </li>
-      <li class="list-group-item">
+        </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+        <ng-template ngbTabTitle><b><i class="fa fa-tasks" aria-hidden="true"></i> Manual Tasks</b></ng-template>
+        <ng-template ngbTabContent>
+        <br>
+        <span *ngIf="!dt.dtManualTasks?.length">- No Manual Task for this Dispatch Ticket. -</span>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table" *ngIf="dt.dtManualTasks?.length">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Task Status</th>
+                  <th scope="col">Task Title</th>
+                  <th scope="col">Task Detail</th>
+                  <th scope="col"  *ngIf="(dt.dtStatus !== 'closed'  && dt.dtStatus !=='completed')">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let itm of dt.dtManualTasks; let i = index">
+                  <th scope="row">{{ i+1 }}</th>
+                  <td>
+                      <span *ngIf="itm.taskStatus==false" class="badge badge-success">Opened</span>
+                      <span *ngIf="itm.taskStatus==true" class="badge badge-danger">Closed</span>
+                  </td>
+                  <td>
+                {{itm.taskTitle}}
+                </td>
+
+                  <td>
+                    <small>{{itm.taskDetail}}</small>
+                  </td>
+                  <td *ngIf="(dt.dtStatus !== 'closed'  && dt.dtStatus !=='completed')" >
+                    <div class="btn-group pull-right mr-1" role="group">
+                      <button *ngIf="itm.taskStatus == false" (click)="taskAction(i,true)" class="btn btn-danger btn-sm">Close </button>
+                      <button *ngIf="(itm.taskStatus == true) && (dt.dtStatus !== 'closed'  && dt.dtStatus !=='completed') "  (click)="taskAction(i,false)" class="btn btn-primary btn-sm">Re-Open</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+        </ng-template>
+        </ngb-tab>
+        </ngb-tabset>
       </li>
     </ul>
   </div>

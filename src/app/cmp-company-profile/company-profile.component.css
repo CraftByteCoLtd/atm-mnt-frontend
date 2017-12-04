@@ -1,0 +1,87 @@
+.card{
+  max-width:740px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+.col-center{
+  float: none;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.form-inline label{
+  justify-content: left;
+}
+.alert{
+  margin-top:5px;
+  margin-left:5px;
+  padding: 2px;
+ 
+    color: #FF5722;
+    font-size: smaller;
+
+}
+.btn{
+  margin-left: 5px;
+}
+
+input.ng-invalid  {
+  border-left: 2px solid #a94442; /* red */
+}
+
+label{
+  font-weight: bold;
+  padding-right:5px;
+  
+}
+
+.form-row{
+  margin-top:10px;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #ccc;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #ccc;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #ccc;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #ccc;
+}
+label.label-fix-width {
+    width: 150px;
+}
+.form-group.mx-sm-6 {
+    padding-top: 10px;
+}
+
+nav.navbar.bg-light-blue {
+    background-color: #f4f0f0;
+    border-radius: 5px;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.badge-light{
+  border:1px solid #ccc;
+}
+
+label.label-fix-width {
+    color: #007bff;
+}
