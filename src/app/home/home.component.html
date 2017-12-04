@@ -1,7 +1,19 @@
-<div class="jumbotron jumbotron-fluid" [ngClass]="{slideInDown:isLoaded, animated: isLoaded}">
+<div class="jumbotron jumbotron-fluid" [ngClass]="{fadeIn:isLoaded, animated: isLoaded}">
   <div class="container">
-    <!-- <img style="position: absolute;left: -10px;top: -19px;height: 100%;z-index: -10;" src="/assets/bg.png" class="zoomInRight"> -->
-    <h4 [ngClass]="{jello:isLoaded, animated: isLoaded}" class="display-4">Welcome : {{fullName}}</h4>
+    <div [ngClass]="{bounceInUp:isLoaded, animated: isLoaded}">
+          <img id="logo"  class="pull-left rounded img-thumbnail" src="{{companyProfile?.companyLogo}}" data-holder-rendered="true" >
+    </div>
+    <h4 class="display-4"  [ngClass]="{bounceInUp:isLoaded, animated: isLoaded}">{{companyProfile?.companyName}} </h4>
+    <blockquote class="blockquote text-center">
+  <p class="mb-0"> {{companyProfile?.companyDetail}}.</p><hr>
+  <footer class="blockquote-footer">by : <cite ><i class="fa fa-users" aria-hidden="true"></i>{{companyProfile?.companyOwner}}</cite>
+    <cite> <i class="fa fa-phone-square" aria-hidden="true"></i> {{companyProfile?.companyPhone}}</cite>
+    <cite><i class="fa fa-envelope" aria-hidden="true"></i> {{companyProfile?.companyEmail}}</cite>
+  </footer>
+</blockquote>
+<hr>
+<blockquote>
+    <h5 [ngClass]="{jello:isLoaded, animated: isLoaded}">Logged in as : {{fullName}}</h5>
     <div class="lead">
       <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isAtmVaulter"><i class="fa fa-user-circle" aria-hidden="true"></i>Vaulter</span>
       <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isTreasurer"><i class="fa fa-user-circle" aria-hidden="true"></i>Treasurer</span>
@@ -10,5 +22,7 @@
       <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isWareHouseManager"><i class="fa fa-user-circle" aria-hidden="true"></i>WareHouse Manager</span>
       <span class="badge badge-pill badge-rule" *ngIf="decodedToken.authRules.isAdmin"><i class="fa fa-user-circle" aria-hidden="true"></i>Admin</span>
     </div>
+
+</blockquote>
   </div>
 </div>
